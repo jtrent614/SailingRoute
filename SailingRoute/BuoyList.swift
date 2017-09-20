@@ -11,10 +11,9 @@ import CoreLocation
 
 class BuoyList: NSObject, NSCoding
 {
-    
-    var buoys = [Buoy]()
     var unused = [Buoy]()
     var used = [Buoy]()
+    var buoys = [Buoy]()
     var raceOrder = [Buoy]()
 
     override init() {
