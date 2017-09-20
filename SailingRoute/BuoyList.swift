@@ -14,7 +14,6 @@ class BuoyList: NSObject, NSCoding
     var unused = [Buoy]()
     var used = [Buoy]()
     var buoys: [Buoy] {
-        print((used + unused).map{$0.identifier}.sorted(by: { $0 < $1 }) )
         return (used + unused).sorted(by: { $0.identifier < $1.identifier })
     }
 

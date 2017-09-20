@@ -49,27 +49,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil,
             Settings.shared.raceMode else { return }
+
+        updateHeadingLabel(coordinate:  coordinate)
         
-        let formattedHeading = Int(latestLocation!.coordinate.direction(to: coordinate))
-        
-        headingLabel.isHidden = false
-        headingLabel.text = String(formattedHeading) + "°"
-        
-        func computeNewAngle(with newAngle: CGFloat) -> CGFloat
-        {
-            return CGFloat(self.latestBearing) - newAngle.toRadians
+        UIView.animate(withDuration: 0.5) {
+            let angle = computeNewAngle(with: newHeading.trueHeading)
+            self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
         }
         
-        let angle = computeNewAngle(with: CGFloat(newHeading.trueHeading))
-        arrowImage.transform = CGAffineTransform(rotationAngle: angle)
-        
+        func computeNewAngle(with newAngle: CLLocationDirection) -> CLLocationDirection
+        {
+            return self.latestBearing - newAngle.toRadians
+        }
     }
     
-    
-    private func angleBetween(bearing: CLLocationDirection, heading: CLLocationDirection) -> CLLocationDirection
-    {
-        return abs(bearing - heading).to360Scale()
+    private func updateHeadingLabel(coordinate: CLLocationCoordinate2D) {
+        let formattedHeading = Int(latestLocation!.coordinate.direction(to: coordinate).to360Scale())
+        headingLabel.text = String(formattedHeading) + "°"
+        headingLabel.isHidden = false
     }
+    
     
     func toggleFollow()
     {
@@ -99,7 +98,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             locationManager.stopUpdatingLocation()
             locationManager.stopUpdatingHeading()
             
-//            mapIsFollowingUser = false
             trackingInProgress = false
             saveRoute()
 
@@ -176,7 +174,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 routeLocations.insert(latestLocation!, at: 0)
             }
             let route = Route(locations: routeLocations)
-            print(route.coordinates)
             nextMarkLabel.text = raceOrder.first!.identifier.uppercased()
             currentRaceRouteOverlay = route.geodesicPolyline
             monitorRegionAtLocation(center: raceOrder.first!.coordinate, identifier: raceOrder.first!.identifier)

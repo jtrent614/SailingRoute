@@ -69,4 +69,6 @@ class Route: NSObject, NSCoding
         aCoder.encode(placemark, forKey: "placemark")
     }
     
+    var x = UIImage()
+    
 }

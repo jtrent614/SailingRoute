@@ -86,53 +86,7 @@ extension CLLocationDirection {
     
     func to360Scale() -> CLLocationDirection
     {
-        guard self > 180.0 else { return self }
-        return 360.0 - self
+        return (self + 360).truncatingRemainder(dividingBy: 360)
     }
     
 }
-
-
-
-
-
-// returns degrees, plus some magic trig that I have no idea about
-//    private func getBearing(toPoint point: CLLocationCoordinate2D) -> CLLocationDirection
-//    {
-//        let lat1 = degreesToRadians(degrees: (currentLocation?.coordinate.latitude)!)
-//        let lon1 = degreesToRadians(degrees: (currentLocation?.coordinate.longitude)!)
-//
-//        let lat2 = degreesToRadians(degrees: point.latitude);
-//        let lon2 = degreesToRadians(degrees: point.longitude);
-//
-//        let dLon = lon2 - lon1;
-//
-//        let y = sin(dLon) * cos(lat2);
-//        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon);
-//        let degreesBearing = radiansToDegrees(radians: atan2(y, x))
-//
-//        return (degreesBearing + 360).truncatingRemainder(dividingBy: 360)  // equivalent to modulo for Doubles. % only works on Ints
-//    }
-
-//    private func getBearing(to point: CLLocationCoordinate2D) -> CLLocationDirection
-//    {
-//        let lat1 = currentLocation?.coordinate.latitude.toRadians()
-//        let lon1 = currentLocation?.coordinate.longitude.toRadians()
-//
-//        let lat2 = point.latitude.toRadians()
-//        let lon2 = point.longitude.toRadians()
-//
-//        let dLon = lon2 - lon1;
-//
-//        let y = sin(dLon) * cos(lat2);
-//        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon);
-//        let degreesBearing = atan2(y, x)
-//
-//        return (degreesBearing + 360).truncatingRemainder(dividingBy: 360)  // equivalent to modulo for Doubles. % only works on Ints
-//    }
-//    private func changeTo360Scale(degrees: CLLocationDirection) -> CLLocationDirection {
-//        guard degrees > 180.0 else { return degrees }
-//        return 360.0 - degrees
-//    }
-//    private func degreesToRadians(degrees: Double) -> Double { return degrees * Double.pi / 180.0 }
-//    private func radiansToDegrees(radians: Double) -> Double { return radians * 180.0 / Double.pi }
