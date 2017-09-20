@@ -13,7 +13,6 @@ class Route: NSObject, NSCoding
 {
     let viewDistanceMultiplier: CLLocationDegrees = 1.3
     
-    
     var locations: [CLLocation] {
         didSet {
             if locations.count > 1 {
