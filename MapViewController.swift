@@ -36,7 +36,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var currentRouteOverlay: MKPolyline?
     var currentRaceRouteOverlay: MKGeodesicPolyline?
     
-    var nextMarkLocation: CLLocation { return buoyList.raceOrder.first?.location ?? CLLocation(latitude: 90, longitude: 0) }
+    var nextMarkLocation: CLLocation { return buoyList.used.first?.location ?? CLLocation(latitude: 90, longitude: 0) }
     
     var latestHeading: CLLocationDirection?
     var latestLocation: CLLocation?
@@ -47,7 +47,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // MARK: - Compass
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        guard let coordinate = buoyList.raceOrder.first?.coordinate, latestLocation != nil,
+        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil,
             Settings.shared.raceMode else { return }
         
         let formattedHeading = Int(latestLocation!.coordinate.direction(to: coordinate))
@@ -169,7 +169,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private func setRaceRoute() {
         guard Settings.shared.raceMode else { return }
         
-        let raceOrder = buoyList.raceOrder
+        let raceOrder = buoyList.used
         if raceOrder.count > 0 {
             var routeLocations = raceOrder.map { $0.location }
             if latestLocation != nil {
@@ -217,8 +217,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private func drawAnnotations()
     {
         mapView.removeAnnotations(mapView.annotations)
-        let buoys = Settings.shared.showAllBuoys ? buoyList.buoys :
-            (Settings.shared.raceMode ? buoyList.raceOrder : buoyList.used)
+        let buoys = Settings.shared.showAllBuoys ? buoyList.buoys : buoyList.used
         
         for buoy in buoys {
             mapView.addAnnotation(buoy)
@@ -273,15 +272,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // MARK: - Location Manager
     
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        guard let firstBuoy = buoyList.raceOrder.first else { return }
+        guard let firstBuoy = buoyList.used.first else { return }
 
         if let region = region as? CLCircularRegion {
             if region.identifier == firstBuoy.identifier {
-                buoyList.raceOrder.removeFirst()
-                if buoyList.raceOrder.count == 0 {
+                buoyList.used.removeFirst()
+                if buoyList.used.count == 0 {
                     nextMarkStackView.isHidden = true
                 } else {
-                    nextMarkLabel.text = buoyList.raceOrder.first!.identifier
+                    nextMarkLabel.text = buoyList.used.first!.identifier
                 }
             }
         }

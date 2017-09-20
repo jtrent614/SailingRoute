@@ -13,15 +13,16 @@ class BuoyList: NSObject, NSCoding
 {
     var unused = [Buoy]()
     var used = [Buoy]()
-    var buoys = [Buoy]()
-    var raceOrder = [Buoy]()
+    var buoys: [Buoy] {
+        print((used + unused).map{$0.identifier}.sorted(by: { $0 < $1 }) )
+        return (used + unused).sorted(by: { $0.identifier < $1.identifier })
+    }
 
     override init() {
         super.init()
-        for (name, location) in buoyDict {
-            buoys.append(Buoy(identifier: name, location: location, buoyList: self))
+        for (name, location) in defaultBuoyDict {
+            unused.append(Buoy(identifier: name, location: location, buoyList: self))
         }
-        buoys = buoys.sorted(by: { $0.identifier < $1.identifier })
         unused = buoys
     }
 
@@ -30,7 +31,6 @@ class BuoyList: NSObject, NSCoding
     }
     
     func addBuoy(_ buoy: Buoy) {
-        buoys.append(buoy)
         unused.append(buoy)
     }
     
@@ -38,17 +38,13 @@ class BuoyList: NSObject, NSCoding
     // MARK: - Coding
 
     required init?(coder aDecoder: NSCoder) {
-        self.buoys = aDecoder.decodeObject(forKey: "buoys") as? [Buoy] ?? [Buoy]()
         self.unused = aDecoder.decodeObject(forKey: "unused") as? [Buoy] ?? [Buoy]()
         self.used = aDecoder.decodeObject(forKey: "used") as? [Buoy] ?? [Buoy]()
-        self.raceOrder = aDecoder.decodeObject(forKey: "raceOrder ") as? [Buoy] ?? [Buoy]()
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(buoys, forKey: "buoys")
         aCoder.encode(unused, forKey: "unused")
         aCoder.encode(used, forKey: "used")
-        aCoder.encode(raceOrder, forKey: "raceOrder")
     }
 
 
@@ -57,7 +53,7 @@ class BuoyList: NSObject, NSCoding
 
 // MARK: - Buoy Data Import
 
-let buoyDict: [String:CLLocation] = [
+let defaultBuoyDict: [String:CLLocation] = [
     "A": CLLocation(latitude: 27.90366667, longitude: -82.45466667),
     "B": CLLocation(latitude: 27.89766667, longitude: -82.44383333),
     "C": CLLocation(latitude: 27.8805,  longitude: -82.44466667),

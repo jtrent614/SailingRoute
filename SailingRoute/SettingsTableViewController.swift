@@ -91,21 +91,6 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-    private func setBuoyRaceOrder() {
-        buoyList.raceOrder = [Buoy]()
-        
-        let count = tableView.numberOfRows(inSection: 1)
-        for x in 0..<count {
-            let indexPath = IndexPath(row: x, section: 1)
-            let cell = tableView.cellForRow(at: indexPath)
-            let identifier = cell?.textLabel?.text
-            let buoy = buoyList.buoyWithIdentifier(id: identifier!)
-            buoyList.raceOrder.append(buoy)
-        }
-    }
-    
-
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         if indexPath.section == 0 {
@@ -126,7 +111,6 @@ class SettingsTableViewController: UITableViewController {
         self.tableView.setEditing(editing, animated: animated)
         toggleAddMarkButton(editing: editing)
         if !editing {
-            setBuoyRaceOrder()
             UserDefaults.standard.saveBuoyList(buoyList)
         }
     }
