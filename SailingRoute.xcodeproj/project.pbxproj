@@ -1,0 +1,524 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		248766A0601CED907A48E188 /* Pods_SailingRoute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A900B8E4A31432045D7B8F2F /* Pods_SailingRoute.framework */; };
+		DB0EA04E1F4D3F950063ED92 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA04D1F4D3F950063ED92 /* CompassView.swift */; };
+		DB0EA0501F4D41000063ED92 /* Compass.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB0EA04F1F4D41000063ED92 /* Compass.xib */; };
+		DB0EA0531F4DC82F0063ED92 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA0521F4DC82F0063ED92 /* SettingsTableViewController.swift */; };
+		DB0EA0551F4DE0000063ED92 /* BuoyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA0541F4DE0000063ED92 /* BuoyList.swift */; };
+		DB0EA0571F4E01A40063ED92 /* TraveledRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA0561F4E01A40063ED92 /* TraveledRoute.swift */; };
+		DB0EA0591F4E08F20063ED92 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA0581F4E08F20063ED92 /* Settings.swift */; };
+		DB0EA05B1F4E4FF30063ED92 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */; };
+		DB1AF1241F4A46D200FDB67D /* MapSavedRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */; };
+		DB9C862B1F49300E00ADE4B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */; };
+		DB9C86301F49300E00ADE4B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB9C862E1F49300E00ADE4B0 /* Main.storyboard */; };
+		DB9C86321F49300E00ADE4B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB9C86311F49300E00ADE4B0 /* Assets.xcassets */; };
+		DB9C86351F49300E00ADE4B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB9C86331F49300E00ADE4B0 /* LaunchScreen.storyboard */; };
+		DB9C863D1F49316A00ADE4B0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */; };
+		DB9C86401F49D82200ADE4B0 /* SavedRoutesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C863F1F49D82200ADE4B0 /* SavedRoutesTableViewController.swift */; };
+		DB9C86421F49EC7400ADE4B0 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C86411F49EC7400ADE4B0 /* Route.swift */; };
+		DB9C86461F4A317500ADE4B0 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DB9C86451F4A317500ADE4B0 /* Podfile */; };
+		DBB57C2B1F713EDD00B7D537 /* SailingRouteTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB57C2A1F713EDD00B7D537 /* SailingRouteTabBarController.swift */; };
+		DBB57C2D1F7140F800B7D537 /* AngleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB57C2C1F7140F800B7D537 /* AngleExtensions.swift */; };
+		DBB57C311F71470400B7D537 /* AddMarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB57C2F1F71470400B7D537 /* AddMarkTableViewController.swift */; };
+		DBB57C351F718B9A00B7D537 /* UnitConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB57C341F718B9A00B7D537 /* UnitConversions.swift */; };
+		DBBC1C011F4D260C00A881A8 /* Buoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC1C001F4D260C00A881A8 /* Buoy.swift */; };
+		DBCB43131F5928FD0017E195 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DBCB43121F5928FD0017E195 /* .gitignore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7800A8F985B17D1AF0AF1BF8 /* Pods-SailingRoute.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SailingRoute.release.xcconfig"; path = "Pods/Target Support Files/Pods-SailingRoute/Pods-SailingRoute.release.xcconfig"; sourceTree = "<group>"; };
+		A900B8E4A31432045D7B8F2F /* Pods_SailingRoute.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SailingRoute.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB0EA04D1F4D3F950063ED92 /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
+		DB0EA04F1F4D41000063ED92 /* Compass.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Compass.xib; sourceTree = "<group>"; };
+		DB0EA0521F4DC82F0063ED92 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		DB0EA0541F4DE0000063ED92 /* BuoyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuoyList.swift; sourceTree = "<group>"; };
+		DB0EA0561F4E01A40063ED92 /* TraveledRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraveledRoute.swift; sourceTree = "<group>"; };
+		DB0EA0581F4E08F20063ED92 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
+		DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSavedRouteViewController.swift; sourceTree = "<group>"; };
+		DB9C86271F49300E00ADE4B0 /* SailingRoute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SailingRoute.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB9C862F1F49300E00ADE4B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB9C86311F49300E00ADE4B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DB9C86341F49300E00ADE4B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DB9C86361F49300E00ADE4B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = ../MapViewController.swift; sourceTree = "<group>"; };
+		DB9C863F1F49D82200ADE4B0 /* SavedRoutesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRoutesTableViewController.swift; sourceTree = "<group>"; };
+		DB9C86411F49EC7400ADE4B0 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		DB9C86451F4A317500ADE4B0 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DBB57C2A1F713EDD00B7D537 /* SailingRouteTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailingRouteTabBarController.swift; sourceTree = "<group>"; };
+		DBB57C2C1F7140F800B7D537 /* AngleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngleExtensions.swift; sourceTree = "<group>"; };
+		DBB57C2F1F71470400B7D537 /* AddMarkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMarkTableViewController.swift; sourceTree = "<group>"; };
+		DBB57C341F718B9A00B7D537 /* UnitConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnitConversions.swift; path = SailingRoute/UnitConversions.swift; sourceTree = "<group>"; };
+		DBBC1C001F4D260C00A881A8 /* Buoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buoy.swift; sourceTree = "<group>"; };
+		DBCB43121F5928FD0017E195 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = SailingRoute/.gitignore; sourceTree = "<group>"; };
+		DCE761B8B8ED4C8E4D5BCA49 /* Pods-SailingRoute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SailingRoute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SailingRoute/Pods-SailingRoute.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB9C86241F49300E00ADE4B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				248766A0601CED907A48E188 /* Pods_SailingRoute.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8F2E26928A357A4B99040F20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A900B8E4A31432045D7B8F2F /* Pods_SailingRoute.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D94F381C4889BD3AEB37487C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DCE761B8B8ED4C8E4D5BCA49 /* Pods-SailingRoute.debug.xcconfig */,
+				7800A8F985B17D1AF0AF1BF8 /* Pods-SailingRoute.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DB0EA0511F4D410A0063ED92 /* Map VC */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */,
+				DB0EA04D1F4D3F950063ED92 /* CompassView.swift */,
+				DB0EA04F1F4D41000063ED92 /* Compass.xib */,
+			);
+			name = "Map VC";
+			sourceTree = "<group>";
+		};
+		DB41AFB41F59312C00E92D80 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DBB57C2A1F713EDD00B7D537 /* SailingRouteTabBarController.swift */,
+				DB9C86411F49EC7400ADE4B0 /* Route.swift */,
+				DB0EA0561F4E01A40063ED92 /* TraveledRoute.swift */,
+				DB0EA0581F4E08F20063ED92 /* Settings.swift */,
+				DB0EA0541F4DE0000063ED92 /* BuoyList.swift */,
+				DBBC1C001F4D260C00A881A8 /* Buoy.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		DB9C861E1F49300D00ADE4B0 = {
+			isa = PBXGroup;
+			children = (
+				DBCB43121F5928FD0017E195 /* .gitignore */,
+				DB9C86451F4A317500ADE4B0 /* Podfile */,
+				DB9C86291F49300E00ADE4B0 /* SailingRoute */,
+				DBB57C341F718B9A00B7D537 /* UnitConversions.swift */,
+				DB9C86281F49300E00ADE4B0 /* Products */,
+				D94F381C4889BD3AEB37487C /* Pods */,
+				8F2E26928A357A4B99040F20 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		DB9C86281F49300E00ADE4B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C86271F49300E00ADE4B0 /* SailingRoute.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB9C86291F49300E00ADE4B0 /* SailingRoute */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C863E1F49317300ADE4B0 /* Supporting Files */,
+				DB9C862E1F49300E00ADE4B0 /* Main.storyboard */,
+				DB41AFB41F59312C00E92D80 /* Classes */,
+				DBFCE2E61F5B4FAA007769B2 /* Saved Route VC */,
+				DB0EA0511F4D410A0063ED92 /* Map VC */,
+				DBB57C331F71470C00B7D537 /* Add Mark VC */,
+				DBFCE2E71F5B4FB0007769B2 /* Settings VC */,
+				DBB57C2E1F71417500B7D537 /* Extensions */,
+			);
+			path = SailingRoute;
+			sourceTree = "<group>";
+		};
+		DB9C863E1F49317300ADE4B0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */,
+				DB9C86311F49300E00ADE4B0 /* Assets.xcassets */,
+				DB9C86331F49300E00ADE4B0 /* LaunchScreen.storyboard */,
+				DB9C86361F49300E00ADE4B0 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DBB57C2E1F71417500B7D537 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DBB57C2C1F7140F800B7D537 /* AngleExtensions.swift */,
+				DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		DBB57C331F71470C00B7D537 /* Add Mark VC */ = {
+			isa = PBXGroup;
+			children = (
+				DBB57C2F1F71470400B7D537 /* AddMarkTableViewController.swift */,
+			);
+			name = "Add Mark VC";
+			sourceTree = "<group>";
+		};
+		DBFCE2E61F5B4FAA007769B2 /* Saved Route VC */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C863F1F49D82200ADE4B0 /* SavedRoutesTableViewController.swift */,
+				DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */,
+			);
+			name = "Saved Route VC";
+			sourceTree = "<group>";
+		};
+		DBFCE2E71F5B4FB0007769B2 /* Settings VC */ = {
+			isa = PBXGroup;
+			children = (
+				DB0EA0521F4DC82F0063ED92 /* SettingsTableViewController.swift */,
+			);
+			name = "Settings VC";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB9C86261F49300E00ADE4B0 /* SailingRoute */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB9C86391F49300E00ADE4B0 /* Build configuration list for PBXNativeTarget "SailingRoute" */;
+			buildPhases = (
+				22200CAB9C18A70938935239 /* [CP] Check Pods Manifest.lock */,
+				DB9C86231F49300E00ADE4B0 /* Sources */,
+				DB9C86241F49300E00ADE4B0 /* Frameworks */,
+				DB9C86251F49300E00ADE4B0 /* Resources */,
+				C365E95648C27C680C69C5B0 /* [CP] Embed Pods Frameworks */,
+				3E9EFD1B9BCE4B69CB0B578A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SailingRoute;
+			productName = SailingRoute;
+			productReference = DB9C86271F49300E00ADE4B0 /* SailingRoute.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB9C861F1F49300D00ADE4B0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = jtrent;
+				TargetAttributes = {
+					DB9C86261F49300E00ADE4B0 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = V85M565CP5;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = DB9C86221F49300D00ADE4B0 /* Build configuration list for PBXProject "SailingRoute" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DB9C861E1F49300D00ADE4B0;
+			productRefGroup = DB9C86281F49300E00ADE4B0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB9C86261F49300E00ADE4B0 /* SailingRoute */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB9C86251F49300E00ADE4B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB9C86351F49300E00ADE4B0 /* LaunchScreen.storyboard in Resources */,
+				DB9C86321F49300E00ADE4B0 /* Assets.xcassets in Resources */,
+				DB0EA0501F4D41000063ED92 /* Compass.xib in Resources */,
+				DB9C86461F4A317500ADE4B0 /* Podfile in Resources */,
+				DBCB43131F5928FD0017E195 /* .gitignore in Resources */,
+				DB9C86301F49300E00ADE4B0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		22200CAB9C18A70938935239 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SailingRoute-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E9EFD1B9BCE4B69CB0B578A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SailingRoute/Pods-SailingRoute-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C365E95648C27C680C69C5B0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SailingRoute/Pods-SailingRoute-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/IVBezierPathRenderer/IVBezierPathRenderer.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IVBezierPathRenderer.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SailingRoute/Pods-SailingRoute-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB9C86231F49300E00ADE4B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB0EA0571F4E01A40063ED92 /* TraveledRoute.swift in Sources */,
+				DB9C86401F49D82200ADE4B0 /* SavedRoutesTableViewController.swift in Sources */,
+				DB0EA05B1F4E4FF30063ED92 /* UserDefaultsExtension.swift in Sources */,
+				DB9C86421F49EC7400ADE4B0 /* Route.swift in Sources */,
+				DBBC1C011F4D260C00A881A8 /* Buoy.swift in Sources */,
+				DB1AF1241F4A46D200FDB67D /* MapSavedRouteViewController.swift in Sources */,
+				DB0EA04E1F4D3F950063ED92 /* CompassView.swift in Sources */,
+				DBB57C311F71470400B7D537 /* AddMarkTableViewController.swift in Sources */,
+				DB0EA0551F4DE0000063ED92 /* BuoyList.swift in Sources */,
+				DBB57C351F718B9A00B7D537 /* UnitConversions.swift in Sources */,
+				DB9C862B1F49300E00ADE4B0 /* AppDelegate.swift in Sources */,
+				DB9C863D1F49316A00ADE4B0 /* MapViewController.swift in Sources */,
+				DB0EA0591F4E08F20063ED92 /* Settings.swift in Sources */,
+				DBB57C2B1F713EDD00B7D537 /* SailingRouteTabBarController.swift in Sources */,
+				DB0EA0531F4DC82F0063ED92 /* SettingsTableViewController.swift in Sources */,
+				DBB57C2D1F7140F800B7D537 /* AngleExtensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DB9C862E1F49300E00ADE4B0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB9C862F1F49300E00ADE4B0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DB9C86331F49300E00ADE4B0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB9C86341F49300E00ADE4B0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DB9C86371F49300E00ADE4B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB9C86381F49300E00ADE4B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DB9C863A1F49300E00ADE4B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCE761B8B8ED4C8E4D5BCA49 /* Pods-SailingRoute.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V85M565CP5;
+				INFOPLIST_FILE = SailingRoute/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrent.SailingRoute;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DB9C863B1F49300E00ADE4B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7800A8F985B17D1AF0AF1BF8 /* Pods-SailingRoute.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V85M565CP5;
+				INFOPLIST_FILE = SailingRoute/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jtrent.SailingRoute;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB9C86221F49300D00ADE4B0 /* Build configuration list for PBXProject "SailingRoute" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB9C86371F49300E00ADE4B0 /* Debug */,
+				DB9C86381F49300E00ADE4B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB9C86391F49300E00ADE4B0 /* Build configuration list for PBXNativeTarget "SailingRoute" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB9C863A1F49300E00ADE4B0 /* Debug */,
+				DB9C863B1F49300E00ADE4B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB9C861F1F49300D00ADE4B0 /* Project object */;
+}
