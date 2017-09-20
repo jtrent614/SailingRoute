@@ -18,6 +18,15 @@ class SettingsTableViewController: UITableViewController {
         Settings.shared.mapViewDistance = Double(value)
     }
     
+    @IBAction func raceModeToggle(_ sender: UISwitch) {
+        Settings.shared.raceMode = !Settings.shared.raceMode
+    }
+    
+    @IBAction func showAllBuoysToggle(_ sender: UISwitch) {
+        Settings.shared.showAllBuoys = !Settings.shared.showAllBuoys
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,40 +47,16 @@ class SettingsTableViewController: UITableViewController {
     }
     
     func addMark(_ sender: UIBarButtonItem) {
-        print("add mark button hit!")
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "AddMarkTableViewController") as! AddMarkTableViewController
+        
         self.navigationController?.pushViewController(controller, animated: true)
     }
-
-    @IBAction func raceModeToggle(_ sender: UISwitch) {
-        Settings.shared.raceMode = !Settings.shared.raceMode
+    
+    func getBuoyAt(indexPath: IndexPath) -> Buoy {
+        return indexPath.section == 1 ? buoyList.used[indexPath.row] : buoyList.unused[indexPath.row]
     }
-    
-    @IBAction func showAllBuoysToggle(_ sender: UISwitch) {
-        Settings.shared.showAllBuoys = !Settings.shared.showAllBuoys
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return settingsCellNames.count
-        case 1:
-            return buoyList.used.count
-        case 2:
-            return buoyList.unused.count
-        default:
-            return 0
-        }
-    }
-    
-
-    
+ 
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let buoy = getBuoyAt(indexPath: fromIndexPath)
         buoy.usedInRace = to.section == 1 ? true : false
@@ -100,10 +85,6 @@ class SettingsTableViewController: UITableViewController {
             cell.textLabel?.text = getBuoyAt(indexPath: indexPath).identifier
         }
         return cell
-    }
-    
-    func getBuoyAt(indexPath: IndexPath) -> Buoy {
-        return indexPath.section == 1 ? buoyList.used[indexPath.row] : buoyList.unused[indexPath.row]
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -153,6 +134,24 @@ class SettingsTableViewController: UITableViewController {
         return indexPath.section == 0 ? false : true
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionHeaders.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return settingsCellNames.count
+        case 1:
+            return buoyList.used.count
+        case 2:
+            return buoyList.unused.count
+        default:
+            return 0
+        }
+    }
+    
+    
     let settingsCellNames: [Int:String] = [
         0: "raceModeCell",
         1: "showAllBuoysCell",
@@ -161,7 +160,7 @@ class SettingsTableViewController: UITableViewController {
     
     let sectionHeaders: [Int:String] = [
         0: "Settings",
-        1: "Marks used in race",
+        1: "Marks used",
         2: "Unused marks"
     ]
 }

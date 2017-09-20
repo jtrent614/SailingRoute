@@ -16,7 +16,6 @@ class SavedRoutesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
@@ -25,8 +24,8 @@ class SavedRoutesTableViewController: UITableViewController {
         
         routes = UserDefaults.standard.getRoutes()
         tableView.reloadData()
-        
     }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
