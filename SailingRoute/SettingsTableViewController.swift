@@ -62,9 +62,9 @@ class SettingsTableViewController: UITableViewController {
         case 0:
             return settingsCellNames.count
         case 1:
-            return buoyList.buoys.filter { $0.usedInRace == true }.count
+            return buoyList.used.count
         case 2:
-            return buoyList.buoys.filter { $0.usedInRace == false }.count
+            return buoyList.unused.count
         default:
             return 0
         }
@@ -141,16 +141,12 @@ class SettingsTableViewController: UITableViewController {
         }
     }
     
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        let buoy = getBuoyAt(indexPath: indexPath)
-//        if indexPath.section == 1 {  // used
-//            let newIndexPath = IndexPath(row: tableView.numberOfRows(inSection: 2), section: 2)
-//            tableView(tableView, moveRowAt: indexPath, to: newIndexPath)
-//            buoyList.used.remove(at: <#T##Int#>)
-//        } else if indexPath.section == 2 {   // unused
-//            
-//        }
-//    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            buoyList.unused.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section == 0 ? false : true
@@ -161,8 +157,8 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-//        return indexPath.section == 0 ? .none : .delete
-        return .none
+        return indexPath.section == 2 ? .delete : .none
+//        return .none
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
