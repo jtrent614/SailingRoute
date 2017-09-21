@@ -32,20 +32,19 @@ class Route: NSObject, Serializable
 
     var locations: [CLLocation] {
         get { return coordinates.map { CLLocation(latitude: $0.latitude, longitude: $0.longitude) } }
-        set { coordinates = newValue.map { $0.coordinate } }
+        set {
+            if locations.count > 0 {
+                distance += (newValue.last!.distance(from: locations.last!) * UnitConversions.meterToNauticalMile)
+            }
+            coordinates = newValue.map { $0.coordinate }
+        }
     }
-    
-//    var locations: [CLLocation] {
-//        didSet {
-//            if locations.count > 1 {
-//                distance += (locations.last!.distance(from: oldValue.last!) * UnitConversions.meterToNauticalMile)
-//            }
-//        }
-//    }
+
     
     var distance: CLLocationDistance = 0.0
     var distanceDescription: String {
         get {
+            print(distance)
             let precision: Double = distance < 10.0 ? 100.0 : 10.0
             return String(describing: (distance * precision).rounded() / precision)
         }

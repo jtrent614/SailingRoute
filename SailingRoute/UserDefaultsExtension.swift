@@ -17,14 +17,9 @@ enum Keys: String {
 extension UserDefaults {
     
     func getRoutes() -> [TraveledRoute] {
-        guard let encodedData = data(forKey: Keys.savedRoutes.rawValue) else { return [TraveledRoute]() }
-        do {
-            let decoder = JSONDecoder()
-            return try decoder.decode([TraveledRoute].self, from: encodedData)
-        } catch {
-            print(error)
-            return [TraveledRoute]()
-        }
+        guard let encodedData = data(forKey: Keys.savedRoutes.rawValue),
+                let routeList = encodedData.deserialize(type: [TraveledRoute].self) else { return [TraveledRoute]() }
+        return routeList
     }
     
     func updateSavedRoutes(_ routes: [TraveledRoute]) {
@@ -49,6 +44,7 @@ extension UserDefaults {
     func saveBuoyList(_ list: BuoyList) {
         do {
             let encoder = JSONEncoder()
+//            let encodedData = list.serialize()
             let encodedData = try encoder.encode(list)
             set(encodedData, forKey: Keys.buoyList.rawValue)
         } catch { print(error) }
@@ -62,4 +58,14 @@ extension UserDefaults {
     }
     
 }
+
+
+/*
+ Printing JSON:
+ 
+ let json = try? JSONSerialization.jsonObject(with: encodedData, options: .allowFragments)
+ if let json = json {
+ print(String(describing: json))
+ }
+ */
 

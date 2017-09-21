@@ -10,7 +10,6 @@ import Foundation
 
 protocol Serializable : Codable {
     func serialize() -> Data?
-//    func deserialize<T: Codable>(data: T) -> T
 }
 
 extension Serializable {
@@ -23,9 +22,15 @@ extension Serializable {
             return nil
         }
     }
-    
-//    func deserialize<T: Codable>(data: T) -> T {
-//        let decoder = JSONDecoder()
-//        return try? decoder.decode(T, from: data)
-//    }
 }
+
+extension Array: Serializable { }
+
+extension Data {
+    func deserialize<T: Decodable>(type: T.Type) -> T?  {
+        let decoder = JSONDecoder()
+        return try? decoder.decode(type.self, from: self)
+    }
+}
+
+
