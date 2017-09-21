@@ -9,7 +9,6 @@
 // https://github.com/zntfdr/Compass/blob/master/compass/UserDefauts%2BExtensions.swift  compass
 // Use JLTGradientPathRenderer in the future? Rainbow bezier paths
 
-
 import UIKit
 import MapKit
 import IVBezierPathRenderer
@@ -49,6 +48,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil,
             Settings.shared.raceMode else { return }
+        arrowImage.isHidden = false
 
         updateHeadingLabel(coordinate:  coordinate)
         
@@ -84,9 +84,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             
             locationManager.startUpdatingLocation()
             locationManager.startUpdatingHeading()
-            
-            speedStackView.isHidden = false
-            arrowImage.isHidden = false
             
             mapIsFollowingUser = true
             trackingInProgress = true
@@ -215,12 +212,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     private func drawAnnotations()
     {
         mapView.removeAnnotations(mapView.annotations)
+        
         let buoys = Settings.shared.showAllBuoys ? buoyList.buoys : buoyList.used
-
-        for buoy in buoys {
-//            let annotation = Annotation 
-//            mapView.addAnnotation()
-        }
+        buoys.forEach { mapView.addAnnotation($0.annotation) }
     }
     
     
@@ -294,6 +288,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     private func updateSpeedDisplay() {
         guard let speed = locationManager.location?.speed else { return }
+        
+        speedStackView.isHidden = false
         speedLabel.text = speed > 0 ? String((speed * UnitConversions.metersPerSecondToKnots * 10).rounded() / 10) : "0.0"
     }
     

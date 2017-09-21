@@ -33,7 +33,7 @@ struct Buoy: Serializable {
     }
 
     var annotation: MKAnnotation {
-        return Annotation(coordinate: self.coordinate, buoy: self)
+        return Annotation(buoy: self)
     }
   
     init(identifier: String, coordinate: CLLocationCoordinate2D, usedInRace: Bool, buoyList: BuoyList) {
@@ -43,6 +43,29 @@ struct Buoy: Serializable {
         self.usedInRace = usedInRace
         self.buoyList = buoyList
     }
+    
+    private enum CodingKeys: String, CodingKey {
+        case identifier
+        case _latitude
+        case _longitude
+        case usedInRace
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identifier, forKey: .identifier)
+        try container.encode(_latitude, forKey: ._latitude)
+        try container.encode(_longitude, forKey: ._longitude)
+        try container.encode(usedInRace, forKey: .usedInRace)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        self._latitude = try container.decode(Double.self, forKey: ._latitude)
+        self._longitude = try container.decode(Double.self, forKey: ._longitude)
+        self.usedInRace = try container.decode(Bool.self, forKey: .usedInRace)
+    }
 }
 
 
@@ -51,8 +74,8 @@ class Annotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var buoy: Buoy
     
-    init(coordinate: CLLocationCoordinate2D, buoy: Buoy) {
-        self.coordinate = coordinate
+    init(buoy: Buoy) {
+        self.coordinate = buoy.coordinate
         self.buoy = buoy
         super.init()
     }
