@@ -16,6 +16,7 @@
 		DB0EA0591F4E08F20063ED92 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA0581F4E08F20063ED92 /* Settings.swift */; };
 		DB0EA05B1F4E4FF30063ED92 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */; };
 		DB1AF1241F4A46D200FDB67D /* MapSavedRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */; };
+		DB5C247D1F7370A600E0C72F /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5C247C1F7370A600E0C72F /* Serializable.swift */; };
 		DB9C862B1F49300E00ADE4B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */; };
 		DB9C86301F49300E00ADE4B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB9C862E1F49300E00ADE4B0 /* Main.storyboard */; };
 		DB9C86321F49300E00ADE4B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB9C86311F49300E00ADE4B0 /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		DB0EA0581F4E08F20063ED92 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSavedRouteViewController.swift; sourceTree = "<group>"; };
+		DB5C247C1F7370A600E0C72F /* Serializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		DB9C86271F49300E00ADE4B0 /* SailingRoute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SailingRoute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB9C862F1F49300E00ADE4B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -114,6 +116,14 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		DB5C247E1F7370C500E0C72F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				DB5C247C1F7370A600E0C72F /* Serializable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		DB9C861E1F49300D00ADE4B0 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +155,7 @@
 				DB0EA0511F4D410A0063ED92 /* Map VC */,
 				DBB57C331F71470C00B7D537 /* Add Mark VC */,
 				DBFCE2E71F5B4FB0007769B2 /* Settings VC */,
+				DB5C247E1F7370C500E0C72F /* Protocols */,
 				DBB57C2E1F71417500B7D537 /* Extensions */,
 			);
 			path = SailingRoute;
@@ -338,6 +349,7 @@
 				DB9C86401F49D82200ADE4B0 /* SavedRoutesTableViewController.swift in Sources */,
 				DB0EA05B1F4E4FF30063ED92 /* UserDefaultsExtension.swift in Sources */,
 				DB9C86421F49EC7400ADE4B0 /* Route.swift in Sources */,
+				DB5C247D1F7370A600E0C72F /* Serializable.swift in Sources */,
 				DBBC1C011F4D260C00A881A8 /* Buoy.swift in Sources */,
 				DB1AF1241F4A46D200FDB67D /* MapSavedRouteViewController.swift in Sources */,
 				DB0EA04E1F4D3F950063ED92 /* CompassView.swift in Sources */,

@@ -48,8 +48,7 @@ extension UserDefaults {
 //        let encodedBuoyList = NSKeyedArchiver.archivedData(withRootObject: list)
 //        set(encodedBuoys, forKey: Keys.buoys.rawValue)
 //        set(encodedBuoyList, forKey: Keys.buoyList.rawValue)
-        let encoder = JSONEncoder()
-        let encodedBuoyList = try? encoder.encode(list)
+        let encodedBuoyList = list.serialize()
         if let encodedBuoyList = encodedBuoyList {
             let archivedData = NSKeyedArchiver.archivedData(withRootObject: encodedBuoyList)
             set(archivedData, forKey: Keys.buoyList.rawValue)

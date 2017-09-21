@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class Route: NSObject, NSCoding, Codable
+class Route: NSObject, NSCoding, Serializable
 {
     let viewDistanceMultiplier: CLLocationDegrees = 1.3
     var latitudes = [Double]()
