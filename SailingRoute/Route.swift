@@ -9,20 +9,40 @@
 import Foundation
 import MapKit
 
-class Route: NSObject, NSCoding
+class Route: NSObject, NSCoding, Codable
 {
     let viewDistanceMultiplier: CLLocationDegrees = 1.3
+    var latitudes = [Double]()
+    var longitudes = [Double]()
+    var placemarkName: String = ""
     
-    var locations: [CLLocation] {
-        didSet {
-            if locations.count > 1 {
-                distance += (locations.last!.distance(from: oldValue.last!) * UnitConversions.meterToNauticalMile)
+    var coordinates: [CLLocationCoordinate2D] {
+        get {
+            var coords = [CLLocationCoordinate2D]()
+            for index in 0...latitudes.count-1 {
+                coords.append(CLLocationCoordinate2D(latitude: latitudes[index], longitude: longitudes[index]))
             }
+            return coords
+        }
+        set {
+            latitudes = newValue.map { $0.latitude }
+            longitudes = newValue.map { $0.longitude }
         }
     }
-    
-    var placemark: CLPlacemark?
 
+    var locations: [CLLocation] {
+        get { return coordinates.map { CLLocation(latitude: $0.latitude, longitude: $0.longitude) } }
+        set { coordinates = newValue.map { $0.coordinate } }
+    }
+    
+//    var locations: [CLLocation] {
+//        didSet {
+//            if locations.count > 1 {
+//                distance += (locations.last!.distance(from: oldValue.last!) * UnitConversions.meterToNauticalMile)
+//            }
+//        }
+//    }
+    
     var distance: CLLocationDistance = 0.0
     var distanceDescription: String {
         get {
@@ -31,12 +51,11 @@ class Route: NSObject, NSCoding
         }
     }
     
-    var coordinates: [CLLocationCoordinate2D] { get { return locations.map { $0.coordinate } } }
     var polyline: MKPolyline { get { return MKPolyline(coordinates: coordinates, count: coordinates.count) } }
     var geodesicPolyline: MKGeodesicPolyline { get { return MKGeodesicPolyline(coordinates: coordinates, count: coordinates.count) } }
     
     func mapRegion() -> MKCoordinateRegion {
-        let xCoords = coordinates.map { $0.longitude }
+        let xCoords = coordinates.map{ $0.longitude }
         let yCoords = coordinates.map { $0.latitude }
         let maxX = xCoords.max()!
         let maxY = yCoords.max()!
@@ -49,26 +68,36 @@ class Route: NSObject, NSCoding
     }
     
     override init() {
-        locations = [CLLocation]()
         super.init()
     }
     
     init(locations: [CLLocation]) {
+        super.init()
         self.locations = locations
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.locations = aDecoder.decodeObject(forKey: "locations") as? [CLLocation] ?? [CLLocation]()
+        self.longitudes = aDecoder.decodeObject(forKey: "longitudes") as? [Double] ?? [Double]()
+        self.latitudes = aDecoder.decodeObject(forKey: "latitudes") as? [Double] ?? [Double]()
         self.distance = aDecoder.decodeDouble(forKey: "distance")
-        self.placemark = aDecoder.decodeObject(forKey: "placemark") as? CLPlacemark
+        self.placemarkName = aDecoder.decodeObject(forKey: "placemark") as? String ?? ""
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(locations, forKey: "locations")
+        aCoder.encode(longitudes, forKey: "longitudes")
+        aCoder.encode(latitudes, forKey: "latitudes")
         aCoder.encode(distance, forKey: "distance")
-        aCoder.encode(placemark, forKey: "placemark")
+        aCoder.encode(placemarkName, forKey: "placemark")
     }
     
-    var x = UIImage()
-    
 }
+
+
+
+//    var locations: [CLLocation] {
+//        didSet {
+//            if locations.count > 1 {
+//                distance += (locations.last!.distance(from: oldValue.last!) * UnitConversions.meterToNauticalMile)
+//            }
+//        }
+//    }

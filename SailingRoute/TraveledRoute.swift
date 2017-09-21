@@ -45,6 +45,10 @@ class TraveledRoute: Route {
         self.endDate = aDecoder.decodeObject(forKey: "endDate") as? Date ?? Date()
         super.init(coder: aDecoder)
     }
+
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
     
     override func encode(with aCoder: NSCoder) {
         aCoder.encode(dateCreated, forKey: "dateCreated")

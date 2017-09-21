@@ -326,7 +326,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location, completionHandler: { [weak self] (placemarks, error) in
             if error == nil {
-                self?.currentRoute.placemark = placemarks?[0]
+                self?.currentRoute.placemarkName = placemarks?[0].name ?? ""
             }
         })
     }

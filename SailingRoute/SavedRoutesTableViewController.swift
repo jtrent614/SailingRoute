@@ -40,13 +40,9 @@ class SavedRoutesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeCell", for: indexPath)
         if let route = routes?[indexPath.row] {
-            
-            let mainText = "\(route.placemark?.name! ?? "")"
-            
-            cell.textLabel?.text = "\(mainText == "" ? "" : (mainText + " - "))\(route.dateDescription)"
+            cell.textLabel?.text = "\(route.placemarkName == "" ? "" : (route.placemarkName + " - "))\(route.dateDescription)"
             cell.detailTextLabel?.text = "\(route.distanceDescription) nm - \(String(describing: route.averageSpeed)) avg kts - \(route.locations.count) data points"
         }
-        
         return cell
     }
     
