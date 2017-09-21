@@ -11,7 +11,8 @@ import Foundation
 
 enum Keys: String {
     case savedRoutes = "savedRoutes"
-    case buoyList = "buoyList"
+    case buoyList = "buoyList2"
+    case buoys = "buoys"
 }
 
 extension UserDefaults {
@@ -37,15 +38,25 @@ extension UserDefaults {
     }
     
     func saveBuoyList(_ list: BuoyList) {
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: list)
-        set(encodedData, forKey: Keys.buoyList.rawValue)
+        let buoys: [EncodableBuoy] = list.buoys.map { EncodableBuoy(buoy: $0, buoyList: list) }
+//        let newList = BuoyList()
+//        newList.unused = encodedBuoys.flatMap{ $0.buoy }.filter { !$0.usedInRace }
+//        newList.used = encodedBuoys.flatMap{ $0.buoy }.filter { $0.usedInRace }
+        list.unused = [Buoy]()
+        list.used = [Buoy]()
+        let encodedBuoys = NSKeyedArchiver.archivedData(withRootObject: buoys)
+        let encodedBuoyList = NSKeyedArchiver.archivedData(withRootObject: list)
+        set(encodedBuoys, forKey: Keys.buoys.rawValue)
+        set(encodedBuoyList, forKey: Keys.buoyList.rawValue)
     }
     
     func getBuoyList() -> BuoyList {
-        var buoyList = BuoyList()
-        if let encodedData = data(forKey: Keys.buoyList.rawValue) {
-            buoyList = NSKeyedUnarchiver.unarchiveObject(with: encodedData) as! BuoyList
-        }
+        guard let encodedBuoyList = data(forKey: Keys.buoyList.rawValue),
+            let encodedBuoys = data(forKey: Keys.buoys.rawValue) else { return BuoyList() }
+        let buoyList = NSKeyedUnarchiver.unarchiveObject(with: encodedBuoyList) as! BuoyList
+        let buoys = NSKeyedUnarchiver.unarchiveObject(with: encodedBuoys) as! [EncodableBuoy]
+        buoyList.unused = buoys.map { Buoy(encodedBuoy: $0) }.filter{ !$0.usedInRace }
+        buoyList.used = buoys.map { Buoy(encodedBuoy: $0) }.filter{ !$0.usedInRace }
         return buoyList
     }
     

@@ -58,7 +58,7 @@ class SettingsTableViewController: UITableViewController {
     }
  
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let buoy = getBuoyAt(indexPath: fromIndexPath)
+        var buoy = getBuoyAt(indexPath: fromIndexPath)
         buoy.usedInRace = to.section == 1 ? true : false
         
         if fromIndexPath.section == 1 && to.section == 2 {

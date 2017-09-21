@@ -215,9 +215,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     {
         mapView.removeAnnotations(mapView.annotations)
         let buoys = Settings.shared.showAllBuoys ? buoyList.buoys : buoyList.used
-        
+
         for buoy in buoys {
-            mapView.addAnnotation(buoy)
+//            let annotation = Annotation 
+//            mapView.addAnnotation()
         }
     }
     
@@ -249,16 +250,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? Buoy else {return nil}
+        guard let annotation = annotation as? Buoy.Annotation else { return nil }
         
-        var view = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
+        let buoyId = annotation.parent.identifier
+        
+        var view = mapView.dequeueReusableAnnotationView(withIdentifier: buoyId)
        
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier) {
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: buoyId) {
             view = dequeuedView
         } else {
-            view = MKAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+            view = MKAnnotationView(annotation: annotation, reuseIdentifier: buoyId)
         }
-        view?.image = UIImage(named: annotation.identifier)
+        view?.image = UIImage(named: buoyId)
         return view
     }
     

@@ -28,9 +28,6 @@ class TraveledRoute: Route {
         return (distance / timeElapsedInHours * 100).rounded() / 100
     }
     
-    
-    
-    
     override init() {
         dateCreated = Date()
         endDate = Date()

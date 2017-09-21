@@ -11,8 +11,9 @@ import CoreLocation
 
 class BuoyList: NSObject, NSCoding
 {
-    var unused = [Buoy]()
-    var used = [Buoy]()
+    var unused: [Buoy] = [Buoy]()
+    var used: [Buoy] = [Buoy]()
+    
     var buoys: [Buoy] {
         return (used + unused).sorted(by: { $0.identifier < $1.identifier })
     }
@@ -20,7 +21,7 @@ class BuoyList: NSObject, NSCoding
     override init() {
         super.init()
         for (name, location) in defaultBuoyDict {
-            unused.append(Buoy(identifier: name, location: location, buoyList: self))
+            unused.append(Buoy(identifier: name, coordinate: location.coordinate, usedInRace: false, buoyList: self))
         }
         unused = buoys
     }
