@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-class Route: NSObject, NSCoding, Serializable
+class Route: NSObject, Serializable
 {
     let viewDistanceMultiplier: CLLocationDegrees = 1.3
     var latitudes = [Double]()
@@ -19,7 +19,7 @@ class Route: NSObject, NSCoding, Serializable
     var coordinates: [CLLocationCoordinate2D] {
         get {
             var coords = [CLLocationCoordinate2D]()
-            for index in 0...latitudes.count-1 {
+            for index in 0..<latitudes.count {
                 coords.append(CLLocationCoordinate2D(latitude: latitudes[index], longitude: longitudes[index]))
             }
             return coords
@@ -76,28 +76,19 @@ class Route: NSObject, NSCoding, Serializable
         self.locations = locations
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        self.longitudes = aDecoder.decodeObject(forKey: "longitudes") as? [Double] ?? [Double]()
-        self.latitudes = aDecoder.decodeObject(forKey: "latitudes") as? [Double] ?? [Double]()
-        self.distance = aDecoder.decodeDouble(forKey: "distance")
-        self.placemarkName = aDecoder.decodeObject(forKey: "placemark") as? String ?? ""
+    private enum CodingKeys: String, CodingKey {
+        case latitudes
+        case longitudes
+        case placemarkName
+        case distance
     }
     
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(longitudes, forKey: "longitudes")
-        aCoder.encode(latitudes, forKey: "latitudes")
-        aCoder.encode(distance, forKey: "distance")
-        aCoder.encode(placemarkName, forKey: "placemark")
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(latitudes, forKey: .latitudes)
+        try container.encode(longitudes, forKey: .longitudes)
+        try container.encode(placemarkName, forKey: .placemarkName)
+        try container.encode(distance, forKey: .distance)
     }
-    
+
 }
-
-
-
-//    var locations: [CLLocation] {
-//        didSet {
-//            if locations.count > 1 {
-//                distance += (locations.last!.distance(from: oldValue.last!) * UnitConversions.meterToNauticalMile)
-//            }
-//        }
-//    }

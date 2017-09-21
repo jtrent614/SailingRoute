@@ -18,23 +18,40 @@ enum Keys: String {
 extension UserDefaults {
     
     func getRoutes() -> [TraveledRoute] {
-        var routes = [TraveledRoute]()
-        if let encodedData = data(forKey: Keys.savedRoutes.rawValue) {
-            routes = NSKeyedUnarchiver.unarchiveObject(with: encodedData) as! [TraveledRoute]
+        guard let encodedData = data(forKey: Keys.savedRoutes.rawValue) else { return [TraveledRoute]() }
+//            routes = NSKeyedUnarchiver.unarchiveObject(with: encodedData) as! [TraveledRoute]
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode([TraveledRoute].self, from: encodedData)
+        } catch {
+            print(error)
+            return [TraveledRoute]()
         }
-        return routes
     }
     
     func updateSavedRoutes(_ routes: [TraveledRoute]) {
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: routes)
-        set(encodedData, forKey: Keys.savedRoutes.rawValue)
+//        let encodedData = NSKeyedArchiver.archivedData(withRootObject: routes)
+        do {
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(routes)
+            set(encodedData, forKey: Keys.savedRoutes.rawValue)
+        } catch {
+            print(error)
+        }
     }
     
     func saveRoute(_ route: TraveledRoute) {
         var routes = getRoutes()
         routes.insert(route, at: 0)
-        let encodedData = NSKeyedArchiver.archivedData(withRootObject: routes)
-        set(encodedData, forKey: Keys.savedRoutes.rawValue)
+        do {
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(routes)
+            set(encodedData, forKey: Keys.savedRoutes.rawValue)
+        } catch {
+            print(error)
+        }
+//        let encodedData = NSKeyedArchiver.archivedData(withRootObject: routes)
+//        set(encodedData, forKey: Keys.savedRoutes.rawValue)
     }
     
     func saveBuoyList(_ list: BuoyList) {
@@ -50,8 +67,8 @@ extension UserDefaults {
 //        set(encodedBuoyList, forKey: Keys.buoyList.rawValue)
         let encodedBuoyList = list.serialize()
         if let encodedBuoyList = encodedBuoyList {
-            let archivedData = NSKeyedArchiver.archivedData(withRootObject: encodedBuoyList)
-            set(archivedData, forKey: Keys.buoyList.rawValue)
+//            let archivedData = NSKeyedArchiver.archivedData(withRootObject: encodedBuoyList)
+            set(encodedBuoyList, forKey: Keys.buoyList.rawValue)
         }
     }
     

@@ -40,21 +40,23 @@ class TraveledRoute: Route {
         super.init(locations: locations)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        self.dateCreated = aDecoder.decodeObject(forKey: "dateCreated") as? Date ?? Date()
-        self.endDate = aDecoder.decodeObject(forKey: "endDate") as? Date ?? Date()
-        super.init(coder: aDecoder)
-    }
-
-    required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
+    private enum CodingKeys: String, CodingKey {
+        case dateCreated
+        case endDate
     }
     
-    override func encode(with aCoder: NSCoder) {
-        aCoder.encode(dateCreated, forKey: "dateCreated")
-        aCoder.encode(endDate, forKey: "endDate")
-        super.encode(with: aCoder)
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.dateCreated = try container.decode(Date.self, forKey: .dateCreated)
+        self.endDate = try container.decode(Date.self, forKey: .endDate)
+        try super.init(from: decoder)
     }
-
-
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(dateCreated, forKey: .dateCreated)
+        try container.encode(endDate, forKey: .endDate)
+    }
+    
 }

@@ -16,7 +16,12 @@ protocol Serializable : Codable {
 extension Serializable {
     func serialize() -> Data? {
         let encoder = JSONEncoder()
-        return try? encoder.encode(self)
+        do {
+            return try encoder.encode(self)
+        } catch {
+            print(error)
+            return nil
+        }
     }
     
 //    func deserialize<T: Codable>(data: T) -> T {

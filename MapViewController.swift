@@ -106,9 +106,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         navigationItem.leftBarButtonItem?.title = trackingInProgress ? "Stop" : "Start"
         
     }
-
     
     private func saveRoute() {
+        guard currentRoute.locations.count > 0 else { return }
+            
         UserDefaults.standard.saveRoute(currentRoute)
     }
     
@@ -297,6 +298,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("location updated")
         guard let userLocation = locations.last else { return }
         
         latestLocation = userLocation
@@ -349,7 +351,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     private func setupLocationManager() {
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.activityType = .otherNavigation
         locationManager.pausesLocationUpdatesAutomatically = false

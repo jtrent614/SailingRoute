@@ -22,6 +22,10 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs to monitor your location in the background.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The app needs to monitor your location while in app.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>App needs to monitor location</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

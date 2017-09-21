@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class BuoyList: NSObject, NSCoding, Serializable
+class BuoyList: NSObject, Serializable
 {
     var identifier: String = "main"
     
@@ -35,21 +35,6 @@ class BuoyList: NSObject, NSCoding, Serializable
     func addBuoy(_ buoy: Buoy) {
         unused.append(buoy)
     }
-    
-    
-    
-    // MARK: - Coding
-
-    required init?(coder aDecoder: NSCoder) {
-        self.unused = aDecoder.decodeObject(forKey: "unused") as? [Buoy] ?? [Buoy]()
-        self.used = aDecoder.decodeObject(forKey: "used") as? [Buoy] ?? [Buoy]()
-    }
-    
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(unused, forKey: "unused")
-        aCoder.encode(used, forKey: "used")
-    }
-
 
 }
 
