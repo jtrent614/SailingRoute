@@ -9,8 +9,10 @@
 import Foundation
 import CoreLocation
 
-class BuoyList: NSObject, NSCoding
+class BuoyList: NSObject, NSCoding, Codable
 {
+    var identifier: String = "main"
+    
     var unused: [Buoy] = [Buoy]()
     var used: [Buoy] = [Buoy]()
     
@@ -33,6 +35,7 @@ class BuoyList: NSObject, NSCoding
     func addBuoy(_ buoy: Buoy) {
         unused.append(buoy)
     }
+    
     
     
     // MARK: - Coding

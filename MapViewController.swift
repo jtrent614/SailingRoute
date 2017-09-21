@@ -250,9 +250,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? Buoy.Annotation else { return nil }
+        guard let annotation = annotation as? Annotation else { return nil }
         
-        let buoyId = annotation.parent.identifier
+        let buoyId = annotation.buoy.identifier
         
         var view = mapView.dequeueReusableAnnotationView(withIdentifier: buoyId)
        
