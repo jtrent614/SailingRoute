@@ -70,13 +70,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    func toggleFollow()
+    @objc func toggleFollow()
     {
         navigationItem.rightBarButtonItem?.title = mapIsFollowingUser ? "Follow" : "Unfollow"
         mapIsFollowingUser = !mapIsFollowingUser
     }
     
-    func toggleTracking()
+    @objc func toggleTracking()
     {
         if !trackingInProgress {
             resetRoute()

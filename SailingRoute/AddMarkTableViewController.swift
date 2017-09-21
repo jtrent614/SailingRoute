@@ -22,7 +22,7 @@ class AddMarkTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(addMarkAndReturn))
     }
 
-    func addMarkAndReturn() {
+    @objc func addMarkAndReturn() {
         if validateTextFields() {
             let tabBarController = self.tabBarController as! SailingRouteTabBarController
             let buoyList = tabBarController.buoyList

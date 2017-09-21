@@ -46,7 +46,7 @@ class SettingsTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func addMark(_ sender: UIBarButtonItem) {
+    @objc func addMark(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "AddMarkTableViewController") as! AddMarkTableViewController
         
