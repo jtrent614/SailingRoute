@@ -13,7 +13,7 @@ import UIKit
 import MapKit
 import IVBezierPathRenderer
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate
+class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate
 {
 
     @IBOutlet weak var mapView: MKMapView!
@@ -25,6 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBOutlet weak var nextMarkStackView: UIStackView!
     
     private let locationManager = CLLocationManager()
+    var delegate = MapDelegate()
     
     var buoyList: BuoyList = BuoyList()
     
@@ -40,28 +41,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var latestHeading: CLLocationDirection?
     var latestLocation: CLLocation?
     var latestBearing: CLLocationDirection { return latestLocation?.bearingToLocationRadian(nextMarkLocation).toDouble ?? 0 }
-
-    
     
     // MARK: - Compass
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil,
-            Settings.shared.raceMode else { return }
-        arrowImage.isHidden = false
-
-        updateHeadingLabel(coordinate:  coordinate)
-        
-        UIView.animate(withDuration: 0.5) {
-            let angle = computeNewAngle(with: newHeading.trueHeading)
-            self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
-        }
-        
-        func computeNewAngle(with newAngle: CLLocationDirection) -> CLLocationDirection
-        {
-            return self.latestBearing - newAngle.toRadians
-        }
-    }
     
     private func updateHeadingLabel(coordinate: CLLocationCoordinate2D) {
         let formattedHeading = Int(latestLocation!.coordinate.direction(to: coordinate).to360Scale())
@@ -124,8 +105,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupLocationManager()
-        mapView.delegate = self
-
+        mapView.delegate = delegate
         updateMap()
     }
     
@@ -141,25 +121,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let tabBarController = self.tabBarController as! SailingRouteTabBarController
         buoyList = tabBarController.buoyList
         
+//        mapView.delegate = MapDelegate()
         
     }
 
     
     // MARK: - Racing
-    
-    
-    private func monitorRegionAtLocation(center: CLLocationCoordinate2D, identifier: String) {
-        guard CLLocationManager.authorizationStatus() == .authorizedAlways,
-            CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else { return }
-        
-        let regionRadius: CLLocationDistance = 30.0
-        let region = CLCircularRegion(center: center, radius: regionRadius, identifier: identifier)
-        
-        region.notifyOnExit = false
-        region.notifyOnEntry = true
-        
-        locationManager.startMonitoring(for: region)
-    }
+
 
     
     private func setRaceRoute() {
@@ -186,7 +154,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.removeOverlays(mapView.overlays)
         setRaceRoute()
         drawTraveledRoute()
-        drawAnnotations()
+        mapView.drawBuoys(buoyList: buoyList)
         updateNavBarDistance()
     }
     
@@ -209,105 +177,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    private func drawAnnotations()
-    {
-        mapView.removeAnnotations(mapView.annotations)
-        
-        let buoys = Settings.shared.showAllBuoys ? buoyList.buoys : buoyList.used
-        buoys.forEach { mapView.addAnnotation($0.annotation) }
-    }
-    
-    
-    
-    // MARK: - Map View
-
-
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        // The route between buoys is a geodesic polyline because I don't know how to 
-        // render two different lines with different settings with the same delegate call
-        // so I made them slightly different classes to separate them
-        
-        if overlay is MKGeodesicPolyline {
-            let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = UIColor.black.withAlphaComponent(0.4)
-            renderer.lineWidth = 1.0
-            return renderer
-        } else if overlay is MKPolyline {
-            let renderer = IVBezierPathRenderer(overlay: overlay)
-            renderer.strokeColor = UIColor.blue.withAlphaComponent(0.7)
-            renderer.lineWidth = 10.0
-            renderer.borderColor = UIColor.red
-            renderer.borderMultiplier = 0.05
-            return renderer
-        }
-        return MKOverlayRenderer()
-    }
-
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? Annotation else { return nil }
-        
-        let buoyId = annotation.buoy.identifier
-        
-        var view = mapView.dequeueReusableAnnotationView(withIdentifier: buoyId)
-       
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: buoyId) {
-            view = dequeuedView
-        } else {
-            view = MKAnnotationView(annotation: annotation, reuseIdentifier: buoyId)
-        }
-        view?.image = UIImage(named: buoyId)
-        return view
-    }
-    
-    
-    
-    
-    
-    // MARK: - Location Manager
-    
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        guard let firstBuoy = buoyList.used.first else { return }
-
-        if let region = region as? CLCircularRegion {
-            if region.identifier == firstBuoy.identifier {
-                buoyList.used.removeFirst()
-                if buoyList.used.count == 0 {
-                    nextMarkStackView.isHidden = true
-                } else {
-                    nextMarkLabel.text = buoyList.used.first!.identifier
-                }
-            }
-        }
-        
-        // Point A:  latitude: 27.90366667, longitude: -82.45466667
-        // Point B:  latitude: 27.89766667, longitude: -82.44383333
-        // Point C:  latitude: 27.8805,  longitude: -82.44466667,
-        // Point E:  latitude: 27.88816667, longitude: -82.45283333
-    }
     
     private func updateSpeedDisplay() {
         guard let speed = locationManager.location?.speed else { return }
         
         speedStackView.isHidden = false
         speedLabel.text = speed > 0 ? String((speed * UnitConversions.metersPerSecondToKnots * 10).rounded() / 10) : "0.0"
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("location updated")
-        guard let userLocation = locations.last else { return }
-        
-        latestLocation = userLocation
-        
-        updateSpeedDisplay()
-    
-        if mapIsFollowingUser {
-            setMapRegion(location: userLocation)
-        }
-        
-        if trackingInProgress {
-            addNewRouteLocations(locations: locations)
-        }
     }
     
     private func setMapRegion(location: CLLocation) {
@@ -343,6 +218,78 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             currentRouteOverlay = currentRoute.polyline
             updateMap()
         }
+    }
+    
+    
+    // MARK: - Location Manager
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil,
+            Settings.shared.raceMode else { return }
+        arrowImage.isHidden = false
+        
+        updateHeadingLabel(coordinate:  coordinate)
+        
+        UIView.animate(withDuration: 0.5) {
+            let angle = computeNewAngle(with: newHeading.trueHeading)
+            self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
+        }
+        
+        func computeNewAngle(with newAngle: CLLocationDirection) -> CLLocationDirection
+        {
+            return self.latestBearing - newAngle.toRadians
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        guard let firstBuoy = buoyList.used.first else { return }
+        
+        if let region = region as? CLCircularRegion {
+            if region.identifier == firstBuoy.identifier {
+                buoyList.used.removeFirst()
+                if buoyList.used.count == 0 {
+                    nextMarkStackView.isHidden = true
+                } else {
+                    nextMarkLabel.text = buoyList.used.first!.identifier
+                }
+            }
+        }
+        
+        // Point A:  latitude: 27.90366667, longitude: -82.45466667
+        // Point B:  latitude: 27.89766667, longitude: -82.44383333
+        // Point C:  latitude: 27.8805,  longitude: -82.44466667,
+        // Point E:  latitude: 27.88816667, longitude: -82.45283333
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation = locations.last else { return }
+        
+        latestLocation = userLocation
+        
+        updateSpeedDisplay()
+        
+        if mapIsFollowingUser {
+            setMapRegion(location: userLocation)
+        }
+        
+        if trackingInProgress {
+            addNewRouteLocations(locations: locations)
+        }
+    }
+    
+    
+    private func monitorRegionAtLocation(center: CLLocationCoordinate2D, identifier: String) {
+        guard CLLocationManager.authorizationStatus() == .authorizedAlways,
+            CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else { return }
+        
+        let regionRadius: CLLocationDistance = 30.0
+        let region = CLCircularRegion(center: center, radius: regionRadius, identifier: identifier)
+        
+        region.notifyOnExit = false
+        region.notifyOnEntry = true
+        
+        locationManager.startMonitoring(for: region)
     }
     
     private func setupLocationManager() {

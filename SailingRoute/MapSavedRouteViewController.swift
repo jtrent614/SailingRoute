@@ -9,31 +9,30 @@
 import UIKit
 import MapKit
 
-import IVBezierPathRenderer
-
-class MapSavedRouteViewController: UIViewController, MKMapViewDelegate {
+class MapSavedRouteViewController: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     
     var route: Route!
-    var ssss = "git branch test"
+    var buoyList: BuoyList!
+    var delegate = MapDelegate()
     
-    override func viewDidAppear(_ animated: Bool) {
-        mapView.add(route.polyline)
-        mapView.setRegion(route.mapRegion(), animated: false)
-        navigationItem.title = "Distance: \(route.distanceDescription) nm"        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let tabBar = self.tabBarController as! SailingRouteTabBarController
+        buoyList = tabBar.buoyList
+        
+        mapView.delegate = delegate
     }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is MKPolyline {
-            let renderer = IVBezierPathRenderer(overlay: overlay)
-            renderer.strokeColor = UIColor.blue.withAlphaComponent(0.4)
-            renderer.lineWidth = 4.0
-            renderer.borderColor = UIColor.red
-            renderer.borderMultiplier = 0.1
-            return renderer
-        }
-        return MKOverlayRenderer()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mapView.add(route.polyline)
+        mapView.setRegion(route.mapRegion(), animated: false)
+        navigationItem.title = "Distance: \(route.distanceDescription) nm"
+
+        mapView.drawBuoys(buoyList: buoyList)
     }
     
 
