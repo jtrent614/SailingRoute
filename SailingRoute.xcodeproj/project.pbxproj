@@ -55,7 +55,7 @@
 		DB9C86311F49300E00ADE4B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB9C86341F49300E00ADE4B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB9C86361F49300E00ADE4B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = ../MapViewController.swift; sourceTree = "<group>"; };
+		DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DB9C863F1F49D82200ADE4B0 /* SavedRoutesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRoutesTableViewController.swift; sourceTree = "<group>"; };
 		DB9C86411F49EC7400ADE4B0 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		DB9C86451F4A317500ADE4B0 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -97,29 +97,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		DB0EA0511F4D410A0063ED92 /* Map VC */ = {
-			isa = PBXGroup;
-			children = (
-				DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */,
-				DB0EA04D1F4D3F950063ED92 /* CompassView.swift */,
-				DB0EA04F1F4D41000063ED92 /* Compass.xib */,
-			);
-			name = "Map VC";
-			sourceTree = "<group>";
-		};
-		DB41AFB41F59312C00E92D80 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				DBB57C2A1F713EDD00B7D537 /* SailingRouteTabBarController.swift */,
-				DB9C86411F49EC7400ADE4B0 /* Route.swift */,
-				DB0EA0561F4E01A40063ED92 /* TraveledRoute.swift */,
-				DB0EA0581F4E08F20063ED92 /* Settings.swift */,
-				DB0EA0541F4DE0000063ED92 /* BuoyList.swift */,
-				DBBC1C001F4D260C00A881A8 /* Buoy.swift */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
 		DB5C247E1F7370C500E0C72F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,31 +129,43 @@
 		DB9C86291F49300E00ADE4B0 /* SailingRoute */ = {
 			isa = PBXGroup;
 			children = (
-				DB9C863E1F49317300ADE4B0 /* Supporting Files */,
 				DB9C862E1F49300E00ADE4B0 /* Main.storyboard */,
-				DB41AFB41F59312C00E92D80 /* Classes */,
-				DBFCE2E61F5B4FAA007769B2 /* Saved Route VC */,
-				DB0EA0511F4D410A0063ED92 /* Map VC */,
-				DBB57C331F71470C00B7D537 /* Add Mark VC */,
-				DBFCE2E71F5B4FB0007769B2 /* Settings VC */,
+				DBBBD6A11F76CA330025E896 /* Supporting Files */,
+				DBBBD6A21F76CA330025E896 /* Settings VC */,
+				DBBBD6A31F76CAC30025E896 /* Add Mark VC */,
+				DBBBD6A01F76CA320025E896 /* Saved Route VC */,
+				DBBBD69E1F76CA320025E896 /* Map VC */,
+				DBBBD69D1F76CA0D0025E896 /* Classes */,
+				DBBBD69F1F76CA320025E896 /* Extensions */,
 				DB5C247E1F7370C500E0C72F /* Protocols */,
-				DBB57C2E1F71417500B7D537 /* Extensions */,
 			);
 			path = SailingRoute;
 			sourceTree = "<group>";
 		};
-		DB9C863E1F49317300ADE4B0 /* Supporting Files */ = {
+		DBBBD69D1F76CA0D0025E896 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */,
-				DB9C86311F49300E00ADE4B0 /* Assets.xcassets */,
-				DB9C86331F49300E00ADE4B0 /* LaunchScreen.storyboard */,
-				DB9C86361F49300E00ADE4B0 /* Info.plist */,
+				DBB57C2A1F713EDD00B7D537 /* SailingRouteTabBarController.swift */,
+				DB9C86411F49EC7400ADE4B0 /* Route.swift */,
+				DB0EA0561F4E01A40063ED92 /* TraveledRoute.swift */,
+				DB0EA0581F4E08F20063ED92 /* Settings.swift */,
+				DB0EA0541F4DE0000063ED92 /* BuoyList.swift */,
+				DBBC1C001F4D260C00A881A8 /* Buoy.swift */,
 			);
-			name = "Supporting Files";
+			path = Classes;
 			sourceTree = "<group>";
 		};
-		DBB57C2E1F71417500B7D537 /* Extensions */ = {
+		DBBBD69E1F76CA320025E896 /* Map VC */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C863C1F49316A00ADE4B0 /* MapViewController.swift */,
+				DB0EA04D1F4D3F950063ED92 /* CompassView.swift */,
+				DB0EA04F1F4D41000063ED92 /* Compass.xib */,
+			);
+			path = "Map VC";
+			sourceTree = "<group>";
+		};
+		DBBBD69F1F76CA320025E896 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				DB5C247C1F7370A600E0C72F /* Codable.swift */,
@@ -184,32 +173,43 @@
 				DBB57C2C1F7140F800B7D537 /* AngleExtensions.swift */,
 				DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */,
 			);
-			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
-		DBB57C331F71470C00B7D537 /* Add Mark VC */ = {
-			isa = PBXGroup;
-			children = (
-				DBB57C2F1F71470400B7D537 /* AddMarkTableViewController.swift */,
-			);
-			name = "Add Mark VC";
-			sourceTree = "<group>";
-		};
-		DBFCE2E61F5B4FAA007769B2 /* Saved Route VC */ = {
+		DBBBD6A01F76CA320025E896 /* Saved Route VC */ = {
 			isa = PBXGroup;
 			children = (
 				DB9C863F1F49D82200ADE4B0 /* SavedRoutesTableViewController.swift */,
 				DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */,
 			);
-			name = "Saved Route VC";
+			path = "Saved Route VC";
 			sourceTree = "<group>";
 		};
-		DBFCE2E71F5B4FB0007769B2 /* Settings VC */ = {
+		DBBBD6A11F76CA330025E896 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */,
+				DB9C86311F49300E00ADE4B0 /* Assets.xcassets */,
+				DB9C86331F49300E00ADE4B0 /* LaunchScreen.storyboard */,
+				DB9C86361F49300E00ADE4B0 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DBBBD6A21F76CA330025E896 /* Settings VC */ = {
 			isa = PBXGroup;
 			children = (
 				DB0EA0521F4DC82F0063ED92 /* SettingsTableViewController.swift */,
 			);
-			name = "Settings VC";
+			path = "Settings VC";
+			sourceTree = "<group>";
+		};
+		DBBBD6A31F76CAC30025E896 /* Add Mark VC */ = {
+			isa = PBXGroup;
+			children = (
+				DBB57C2F1F71470400B7D537 /* AddMarkTableViewController.swift */,
+			);
+			path = "Add Mark VC";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
