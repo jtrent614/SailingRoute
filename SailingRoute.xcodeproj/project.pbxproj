@@ -62,7 +62,7 @@
 		DBB57C2A1F713EDD00B7D537 /* SailingRouteTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SailingRouteTabBarController.swift; sourceTree = "<group>"; };
 		DBB57C2C1F7140F800B7D537 /* AngleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AngleExtensions.swift; sourceTree = "<group>"; };
 		DBB57C2F1F71470400B7D537 /* AddMarkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMarkTableViewController.swift; sourceTree = "<group>"; };
-		DBB57C341F718B9A00B7D537 /* UnitConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnitConversions.swift; path = SailingRoute/UnitConversions.swift; sourceTree = "<group>"; };
+		DBB57C341F718B9A00B7D537 /* UnitConversions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitConversions.swift; sourceTree = "<group>"; };
 		DBBC1C001F4D260C00A881A8 /* Buoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buoy.swift; sourceTree = "<group>"; };
 		DBCB43121F5928FD0017E195 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = SailingRoute/.gitignore; sourceTree = "<group>"; };
 		DCE761B8B8ED4C8E4D5BCA49 /* Pods-SailingRoute.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SailingRoute.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SailingRoute/Pods-SailingRoute.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,7 +122,6 @@
 				DBCB43121F5928FD0017E195 /* .gitignore */,
 				DB9C86451F4A317500ADE4B0 /* Podfile */,
 				DB9C86291F49300E00ADE4B0 /* SailingRoute */,
-				DBB57C341F718B9A00B7D537 /* UnitConversions.swift */,
 				DB9C86281F49300E00ADE4B0 /* Products */,
 				D94F381C4889BD3AEB37487C /* Pods */,
 				8F2E26928A357A4B99040F20 /* Frameworks */,
@@ -196,6 +195,7 @@
 		DBBBD6A11F76CA330025E896 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DBB57C341F718B9A00B7D537 /* UnitConversions.swift */,
 				DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */,
 				DB9C86311F49300E00ADE4B0 /* Assets.xcassets */,
 				DB9C86331F49300E00ADE4B0 /* LaunchScreen.storyboard */,
