@@ -326,8 +326,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     // MARK: - Compass
     
     private func updateDegreeLabels(coordinate: CLLocationCoordinate2D, heading: CLHeading) {
-        bearingLabel.text = latestLocation!.coordinate.direction(to: coordinate).to360Scale.string
-        headingLabel.text = heading.trueHeading.string
+        bearingLabel.text = latestLocation!.coordinate.direction(to: coordinate).to360Scale.stringify
+        headingLabel.text = heading.trueHeading.stringify
     }
 }
 

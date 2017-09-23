@@ -89,7 +89,7 @@ extension CLLocationDirection {
         return (self + 360).truncatingRemainder(dividingBy: 360)
     }
     
-    var string: String
+    var stringify: String
     {
         return String(Int(self)) + "°"
     }
