@@ -105,6 +105,17 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		DB80AB9D1F76CBA90019C695 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DBBBD6A21F76CA330025E896 /* Settings VC */,
+				DBBBD6A31F76CAC30025E896 /* Add Mark VC */,
+				DBBBD6A01F76CA320025E896 /* Saved Route VC */,
+				DBBBD69E1F76CA320025E896 /* Map VC */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		DB9C861E1F49300D00ADE4B0 = {
 			isa = PBXGroup;
 			children = (
@@ -131,10 +142,7 @@
 			children = (
 				DB9C862E1F49300E00ADE4B0 /* Main.storyboard */,
 				DBBBD6A11F76CA330025E896 /* Supporting Files */,
-				DBBBD6A21F76CA330025E896 /* Settings VC */,
-				DBBBD6A31F76CAC30025E896 /* Add Mark VC */,
-				DBBBD6A01F76CA320025E896 /* Saved Route VC */,
-				DBBBD69E1F76CA320025E896 /* Map VC */,
+				DB80AB9D1F76CBA90019C695 /* View Controllers */,
 				DBBBD69D1F76CA0D0025E896 /* Classes */,
 				DBBBD69F1F76CA320025E896 /* Extensions */,
 				DB5C247E1F7370C500E0C72F /* Protocols */,
