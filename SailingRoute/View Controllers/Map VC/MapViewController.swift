@@ -117,7 +117,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         }
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        longPressGesture.minimumPressDuration = 1.0
+        longPressGesture.minimumPressDuration = 0.5
         longPressGesture.delegate = self
         rightHudView.addGestureRecognizer(longPressGesture)
     }
@@ -168,13 +168,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         setRaceRoute()
         drawTraveledRoute()
         mapView.drawBuoys(buoyList: buoyList)
-        updateNavBarDistance()
     }
     
-    private func updateNavBarDistance()
-    {
-        navigationItem.title = "Distance: \(currentRoute.distance.distanceToString) nm"
-    }
+
     
     private func drawRaceRoute()
     {
@@ -243,26 +239,36 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil else { return }
-        
+    
         leftHudView.isHidden = false
         compassHudView.isHidden = false
         rightHudView.isHidden = !Settings.shared.raceMode
-
         
         updateDegreeLabels(coordinate:  coordinate, heading: newHeading)
         
         UIView.animate(withDuration: 0.5) {
-            let angle = computeRotation(with: newHeading.trueHeading)
+            let angle = self.computeRotation(between: newHeading.trueHeading, and: self.latestBearing)
             self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
-        }
-        
-        func computeRotation(with newAngle: CLLocationDirection) -> CLLocationDirection
-        {
-            let angle = Settings.shared.raceMode ?  self.latestBearing : 0
-            return angle - newAngle.toRadians
+            
+            let navBarDegrees = self.latestBearing.toDegrees - newHeading.trueHeading.undo360Scale
+            self.updateNavBarTitle(relativeBearing: navBarDegrees)
         }
     }
+
+    func computeRotation(between heading: CLLocationDirection, and bearing: CLLocationDirection) -> CLLocationDirection
+    {
+        let bearing = Settings.shared.raceMode ?  self.latestBearing : 0
+        return bearing - heading.toRadians
+    }
     
+    
+    private func updateNavBarTitle(relativeBearing: CLLocationDirection)
+    {
+        guard Settings.shared.raceMode else { navigationItem.title = ""; return }
+        let direction = relativeBearing >= 0 ? "Starboard" : "Port"
+        navigationItem.title = "Steer \(direction) \(abs(relativeBearing).degreesToString)"
+    }
+
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         guard let firstBuoy = buoyList.used.first else { return }
         

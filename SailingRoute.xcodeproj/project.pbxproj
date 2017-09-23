@@ -518,7 +518,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V85M565CP5;
-				INFOPLIST_FILE = SailingRoute/Info.plist;
+				INFOPLIST_FILE = "SailingRoute/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrent.SailingRoute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -533,7 +533,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V85M565CP5;
-				INFOPLIST_FILE = SailingRoute/Info.plist;
+				INFOPLIST_FILE = "SailingRoute/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jtrent.SailingRoute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
