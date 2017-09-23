@@ -18,14 +18,14 @@ class SettingsTableViewController: UITableViewController {
         Settings.shared.mapViewDistance = Double(value)
     }
     
-    @IBAction func raceModeToggle(_ sender: UISwitch) {
+    @objc func raceModeToggle() {
         Settings.shared.raceMode = !Settings.shared.raceMode
     }
     
-    @IBAction func showAllBuoysToggle(_ sender: UISwitch) {
+    @objc func showAllBuoysToggle() {
         Settings.shared.showAllBuoys = !Settings.shared.showAllBuoys
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,6 @@ class SettingsTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem?.title = "Edit Marks"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(SettingsTableViewController.addMark(_:)))
         self.navigationItem.title = "Settings"
-        
         
         let tabBarController = self.tabBarController as! SailingRouteTabBarController
         buoyList = tabBarController.buoyList
@@ -56,7 +55,7 @@ class SettingsTableViewController: UITableViewController {
     func getBuoyAt(indexPath: IndexPath) -> Buoy {
         return indexPath.section == 1 ? buoyList.used[indexPath.row] : buoyList.unused[indexPath.row]
     }
- 
+    
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         var buoy = getBuoyAt(indexPath: fromIndexPath)
         buoy.usedInRace = to.section == 1 ? true : false
@@ -80,6 +79,14 @@ class SettingsTableViewController: UITableViewController {
         var cell = UITableViewCell()
         if indexPath.section == 0 {
             cell = tableView.dequeueReusableCell(withIdentifier: settingsCellNames[indexPath.row]!, for: indexPath)
+            if indexPath.row != 2 {
+                let switchButton = UISwitch()
+                cell.accessoryView = switchButton
+                switchButton.isOn = indexPath.row == 0 ? Settings.shared.raceMode : Settings.shared.showAllBuoys
+                cell.textLabel?.text = indexPath.row == 0 ? "Race Mode" : "Show All Buoys"
+                let action = indexPath.row == 0 ? #selector(raceModeToggle) : #selector(showAllBuoysToggle)
+                switchButton.addTarget(self, action: action, for: .valueChanged)
+            }
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "buoyCell", for: indexPath)
             cell.textLabel?.text = getBuoyAt(indexPath: indexPath).identifier
@@ -123,7 +130,6 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return indexPath.section == 2 ? .delete : .none
-//        return .none
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -153,8 +159,8 @@ class SettingsTableViewController: UITableViewController {
     
     
     let settingsCellNames: [Int:String] = [
-        0: "raceModeCell",
-        1: "showAllBuoysCell",
+        0: "switchCell",
+        1: "switchCell",
         2: "viewDistanceCell",
     ]
     

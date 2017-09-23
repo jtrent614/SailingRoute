@@ -84,9 +84,14 @@ extension Double {
 
 extension CLLocationDirection {
     
-    func to360Scale() -> CLLocationDirection
+    var to360Scale: CLLocationDirection
     {
         return (self + 360).truncatingRemainder(dividingBy: 360)
+    }
+    
+    var string: String
+    {
+        return String(Int(self)) + "°"
     }
     
 }

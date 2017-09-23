@@ -44,7 +44,6 @@ class Route: NSObject, Serializable
     var distance: CLLocationDistance = 0.0
     var distanceDescription: String {
         get {
-            print(distance)
             let precision: Double = distance < 10.0 ? 100.0 : 10.0
             return String(describing: (distance * precision).rounded() / precision)
         }

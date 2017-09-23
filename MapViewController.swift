@@ -5,8 +5,6 @@
 //  Created by Jeff Trent on 8/19/17.
 //  Copyright © 2017 jtrent. All rights reserved.
 //
-
-// https://github.com/zntfdr/Compass/blob/master/compass/UserDefauts%2BExtensions.swift  compass
 // Use JLTGradientPathRenderer in the future? Rainbow bezier paths
 
 import UIKit
@@ -15,14 +13,22 @@ import IVBezierPathRenderer
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate
 {
-
+    @IBOutlet weak var hudView: UIStackView!
+    
     @IBOutlet weak var mapView: MKMapView!
+    
+    @IBOutlet weak var leftHudView: UIView!
     @IBOutlet weak var speedLabel: UILabel!
-    @IBOutlet weak var speedStackView: UIStackView!
-    @IBOutlet weak var arrowImage: UIImageView!
+    @IBOutlet weak var distanceTraveledLabel: UILabel!
     @IBOutlet weak var headingLabel: UILabel!
+    
+    @IBOutlet weak var compassHudView: UIView!
+    @IBOutlet weak var arrowImage: UIImageView!
+    
+    @IBOutlet weak var rightHudView: UIView!
+    @IBOutlet weak var bearingLabel: UILabel!
+    @IBOutlet weak var distanceToMarkLabel: UILabel!
     @IBOutlet weak var nextMarkLabel: UILabel!
-    @IBOutlet weak var nextMarkStackView: UIStackView!
     
     private let locationManager = CLLocationManager()
     var delegate = MapDelegate()
@@ -42,14 +48,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     var latestLocation: CLLocation?
     var latestBearing: CLLocationDirection { return latestLocation?.bearingToLocationRadian(nextMarkLocation).toDouble ?? 0 }
     
-    // MARK: - Compass
-    
-    private func updateHeadingLabel(coordinate: CLLocationCoordinate2D) {
-        let formattedHeading = Int(latestLocation!.coordinate.direction(to: coordinate).to360Scale())
-        headingLabel.text = String(formattedHeading) + "°"
-        headingLabel.isHidden = false
-    }
-    
     
     @objc func toggleFollow()
     {
@@ -61,7 +59,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     {
         if !trackingInProgress {
             resetRoute()
-            nextMarkStackView.isHidden = Settings.shared.raceMode ? false : true
+            rightHudView.isHidden = Settings.shared.raceMode ? false : true
+            compassHudView.isHidden = false
             
             locationManager.startUpdatingLocation()
             locationManager.startUpdatingHeading()
@@ -69,9 +68,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             mapIsFollowingUser = true
             trackingInProgress = true
         } else {
-            speedStackView.isHidden = true
-            nextMarkStackView.isHidden = true
-            arrowImage.isHidden = true
+            rightHudView.isHidden = true
+            compassHudView.isHidden = true
             
             locationManager.stopUpdatingLocation()
             locationManager.stopUpdatingHeading()
@@ -107,6 +105,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         setupLocationManager()
         mapView.delegate = delegate
         updateMap()
+        toggleRaceHuds(state: Settings.shared.raceMode)
     }
     
     
@@ -120,11 +119,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         
         let tabBarController = self.tabBarController as! SailingRouteTabBarController
         buoyList = tabBarController.buoyList
-        
-//        mapView.delegate = MapDelegate()
-        
+
+        setupHuds()
     }
 
+    private func setupHuds() {
+        let huds = [leftHudView, compassHudView, rightHudView]
+        huds.forEach {
+            $0?.layer.cornerRadius = 10
+            $0?.layer.borderColor = UIColor.black.cgColor
+            $0?.layer.borderWidth = 1.0
+        }
+    }
+    
+    private func toggleRaceHuds(state: Bool) {
+        compassHudView.isHidden = !state
+        rightHudView.isHidden = !state
+    }
+    
     
     // MARK: - Racing
 
@@ -181,7 +193,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     private func updateSpeedDisplay() {
         guard let speed = locationManager.location?.speed else { return }
         
-        speedStackView.isHidden = false
         speedLabel.text = speed > 0 ? String((speed * UnitConversions.metersPerSecondToKnots * 10).rounded() / 10) : "0.0"
     }
     
@@ -224,20 +235,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     // MARK: - Location Manager
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil,
-            Settings.shared.raceMode else { return }
-        arrowImage.isHidden = false
+        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil else { return }
         
-        updateHeadingLabel(coordinate:  coordinate)
+        updateDegreeLabels(coordinate:  coordinate, heading: newHeading)
         
         UIView.animate(withDuration: 0.5) {
-            let angle = computeNewAngle(with: newHeading.trueHeading)
+            let angle = computeRotation(with: newHeading.trueHeading)
             self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
         }
         
-        func computeNewAngle(with newAngle: CLLocationDirection) -> CLLocationDirection
+        func computeRotation(with newAngle: CLLocationDirection) -> CLLocationDirection
         {
-            return self.latestBearing - newAngle.toRadians
+            let angle = Settings.shared.raceMode ?  self.latestBearing : 0
+            return angle - newAngle.toRadians
         }
     }
     
@@ -248,7 +258,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             if region.identifier == firstBuoy.identifier {
                 buoyList.used.removeFirst()
                 if buoyList.used.count == 0 {
-                    nextMarkStackView.isHidden = true
+                    rightHudView.isHidden = true
                 } else {
                     nextMarkLabel.text = buoyList.used.first!.identifier
                 }
@@ -313,7 +323,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         print("Location could not be found")
     }
     
+    // MARK: - Compass
+    
+    private func updateDegreeLabels(coordinate: CLLocationCoordinate2D, heading: CLHeading) {
+        bearingLabel.text = latestLocation!.coordinate.direction(to: coordinate).to360Scale.string
+        headingLabel.text = heading.trueHeading.string
+    }
 }
+
 
 
 
