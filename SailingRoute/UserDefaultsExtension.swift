@@ -44,7 +44,6 @@ extension UserDefaults {
     func saveBuoyList(_ list: BuoyList) {
         do {
             let encoder = JSONEncoder()
-//            let encodedData = list.serialize()
             let encodedData = try encoder.encode(list)
             set(encodedData, forKey: Keys.buoyList.rawValue)
         } catch { print(error) }

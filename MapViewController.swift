@@ -61,12 +61,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             mapIsFollowingUser = true
             trackingInProgress = true
         } else {
-//            rightHudView.isHidden = true
-//            compassHudView.isHidden = true
-            
             trackingInProgress = false
             saveRoute()
-
         }
         navigationItem.rightBarButtonItem?.title = trackingInProgress ? "Unfollow" : ""
         navigationItem.leftBarButtonItem?.title = trackingInProgress ? "Stop" : "Start"
@@ -95,7 +91,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         setupLocationManager()
         mapView.delegate = delegate
         updateMap()
-//        toggleRaceHud(state: Settings.shared.raceMode)
     }
     
     
