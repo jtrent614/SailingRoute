@@ -41,7 +41,7 @@ class SavedRoutesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeCell", for: indexPath)
         if let route = routes?[indexPath.row] {
             cell.textLabel?.text = "\(route.placemarkName == "" ? "" : (route.placemarkName + " - "))\(route.dateDescription)"
-            cell.detailTextLabel?.text = "\(route.distanceDescription) nm - \(String(describing: route.averageSpeed)) avg kts - \(route.locations.count) data points"
+            cell.detailTextLabel?.text = "\(route.distance.distanceToString) nm - \(String(describing: route.averageSpeed)) avg kts - \(route.locations.count) data points"
         }
         return cell
     }

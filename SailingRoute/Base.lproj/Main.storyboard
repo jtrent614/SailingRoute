@@ -28,7 +28,7 @@
                                 </connections>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3de-oo-F5k" userLabel="Left">
-                                <rect key="frame" x="16" y="546" width="135" height="64"/>
+                                <rect key="frame" x="12" y="546" width="139" height="64"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Nam-XV-Wjj" userLabel="Left Stack View">
                                         <rect key="frame" x="0.0" y="13.5" width="135" height="38"/>
@@ -78,7 +78,7 @@
                                                     <constraint firstAttribute="width" constant="43" id="gWl-0j-WUd"/>
                                                 </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="ahY-iy-nWp" userLabel="Heading Stack">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ahY-iy-nWp" userLabel="Heading Stack">
                                                 <rect key="frame" x="92" y="0.0" width="43" height="38"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="360°" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QNb-oQ-yDr">
@@ -115,7 +115,7 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Nam-XV-Wjj" firstAttribute="leading" secondItem="3de-oo-F5k" secondAttribute="leading" id="31M-rK-IMx"/>
-                                    <constraint firstAttribute="trailing" secondItem="Nam-XV-Wjj" secondAttribute="trailing" id="BQ8-ju-Y4E"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nam-XV-Wjj" secondAttribute="trailing" constant="4" id="BQ8-ju-Y4E"/>
                                     <constraint firstItem="Nam-XV-Wjj" firstAttribute="top" secondItem="3de-oo-F5k" secondAttribute="top" constant="13.629197550185381" id="HJ2-QF-qSL"/>
                                     <constraint firstAttribute="bottom" secondItem="Nam-XV-Wjj" secondAttribute="bottom" constant="12.370802449814619" id="gxf-5g-Oqc"/>
                                 </constraints>
@@ -140,7 +140,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uru-BL-MhJ" userLabel="Right Stack View">
                                         <rect key="frame" x="6" y="14" width="119.5" height="36.5"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Scc-ew-bdi" userLabel="Bearing Stack">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Scc-ew-bdi" userLabel="Bearing Stack">
                                                 <rect key="frame" x="0.0" y="0.0" width="43" height="36.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="360°" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHs-Bg-ODj">
@@ -150,7 +150,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bearing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2y-II-e45">
-                                                        <rect key="frame" x="0.0" y="23" width="43" height="13.5"/>
+                                                        <rect key="frame" x="1.5" y="23" width="40" height="13.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -164,7 +164,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="n9h-cd-ePT" userLabel="Distance To Stack">
                                                 <rect key="frame" x="53" y="0.0" width="30" height="36.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poN-J9-Net">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poN-J9-Net">
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="23"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                         <nil key="textColor"/>

@@ -42,12 +42,12 @@ class Route: NSObject, Serializable
 
     
     var distance: CLLocationDistance = 0.0
-    var distanceDescription: String {
-        get {
-            let precision: Double = distance < 10.0 ? 100.0 : 10.0
-            return String(describing: (distance * precision).rounded() / precision)
-        }
-    }
+//    var distanceDescription: String {
+//        get {
+//            let precision: Double = distance < 10.0 ? 100.0 : 10.0
+//            return String(describing: (distance * precision).rounded() / precision)
+//        }
+//    }
     
     var polyline: MKPolyline { get { return MKPolyline(coordinates: coordinates, count: coordinates.count) } }
     var geodesicPolyline: MKGeodesicPolyline { get { return MKGeodesicPolyline(coordinates: coordinates, count: coordinates.count) } }

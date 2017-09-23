@@ -79,19 +79,19 @@ extension Double {
     {
         return Double(CGFloat(self).toDegrees)
     }
-}
-
-
-extension CLLocationDirection {
+    
+    var distanceToString: String {
+        let precision: Double = self < 10.0 ? 100.0 : 10.0
+        return String(describing: (self * precision).rounded() / precision)
+    }
     
     var to360Scale: CLLocationDirection
     {
         return (self + 360).truncatingRemainder(dividingBy: 360)
     }
     
-    var stringify: String
+    var degreesToString: String
     {
         return String(Int(self)) + "°"
     }
-    
 }

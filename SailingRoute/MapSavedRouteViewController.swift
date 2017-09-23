@@ -30,7 +30,7 @@ class MapSavedRouteViewController: UIViewController {
         super.viewDidAppear(animated)
         mapView.add(route.polyline)
         mapView.setRegion(route.mapRegion(), animated: false)
-        navigationItem.title = "Distance: \(route.distanceDescription) nm"
+        navigationItem.title = "Distance: \(route.distance.distanceToString) nm"
 
         mapView.drawBuoys(buoyList: buoyList)
     }

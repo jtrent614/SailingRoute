@@ -27,6 +27,13 @@ class BuoyList: NSObject, Serializable
         }
         unused = buoys
     }
+    
+    func moveBuoyToUnused(buoy: Buoy) {
+        guard let index = used.index(where: { $0.identifier == buoy.identifier }) else { return }
+        
+        used.remove(at: index)
+        unused.insert(buoy, at: 0)
+    }
 
     func buoyWithIdentifier(id: String) -> Buoy {
         return buoys.filter { $0.identifier == id }.first!
@@ -48,6 +55,8 @@ class BuoyList: NSObject, Serializable
         try container.encode(unused, forKey: .unused)
         try container.encode(used, forKey: .used)
     }
+    
+    
 
 }
 

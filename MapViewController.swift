@@ -13,8 +13,6 @@ import IVBezierPathRenderer
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureRecognizerDelegate
 {
-    @IBOutlet weak var hudView: UIStackView!
-    
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var leftHudView: UIView!
@@ -59,7 +57,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     {
         if !trackingInProgress {
             resetRoute()
-            rightHudView.isHidden = Settings.shared.raceMode ? false : true
+//            rightHudView.isHidden = Settings.shared.raceMode ? false : true
             compassHudView.isHidden = false
             
             locationManager.startUpdatingLocation()
@@ -68,8 +66,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             mapIsFollowingUser = true
             trackingInProgress = true
         } else {
-            rightHudView.isHidden = true
-            compassHudView.isHidden = true
+//            rightHudView.isHidden = true
+//            compassHudView.isHidden = true
             
             locationManager.stopUpdatingLocation()
             locationManager.stopUpdatingHeading()
@@ -130,16 +128,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             $0?.layer.borderColor = UIColor.black.cgColor
             $0?.layer.borderWidth = 1.0
         }
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0
+        longPressGesture.delegate = self
+        rightHudView.addGestureRecognizer(longPressGesture)
     }
     
     private func toggleRaceHuds(state: Bool) {
         compassHudView.isHidden = !state
         rightHudView.isHidden = !state
     }
-    
+
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .ended {
+            goToNextMark()
+        }
+    }
     
     // MARK: - Racing
 
+    func goToNextMark() {
+        guard let currentMark = buoyList.used.first else { return }
+        buoyList.moveBuoyToUnused(buoy: currentMark)
+        
+        updateMap()
+    }
 
     
     private func setRaceRoute() {
@@ -156,6 +170,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             currentRaceRouteOverlay = route.geodesicPolyline
             monitorRegionAtLocation(center: raceOrder.first!.coordinate, identifier: raceOrder.first!.identifier)
             drawRaceRoute()
+            updateDistanceToNextMark()
         }
     }
     
@@ -172,7 +187,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     private func updateNavBarDistance()
     {
-        navigationItem.title = "Distance: \(currentRoute.distanceDescription) nm"
+        navigationItem.title = "Distance: \(currentRoute.distance.distanceToString) nm"
     }
     
     private func drawRaceRoute()
@@ -187,6 +202,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         if currentRouteOverlay != nil {
             mapView.add(currentRouteOverlay!)
         }
+    }
+    
+    private func updateDistanceToNextMark() {
+        guard Settings.shared.raceMode, let location = latestLocation,
+            let mark = buoyList.used.first  else { return }
+        
+        let distance = location.distance(from: mark.location)
+        distanceToMarkLabel.text = distance.distanceToString
     }
     
     
@@ -326,8 +349,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     // MARK: - Compass
     
     private func updateDegreeLabels(coordinate: CLLocationCoordinate2D, heading: CLHeading) {
-        bearingLabel.text = latestLocation!.coordinate.direction(to: coordinate).to360Scale.stringify
-        headingLabel.text = heading.trueHeading.stringify
+        bearingLabel.text = latestLocation!.coordinate.direction(to: coordinate).to360Scale.degreesToString
+        headingLabel.text = heading.trueHeading.degreesToString
     }
 }
 
