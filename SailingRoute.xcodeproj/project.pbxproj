@@ -16,7 +16,7 @@
 		DB0EA0591F4E08F20063ED92 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA0581F4E08F20063ED92 /* Settings.swift */; };
 		DB0EA05B1F4E4FF30063ED92 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */; };
 		DB1AF1241F4A46D200FDB67D /* MapSavedRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */; };
-		DB5C247D1F7370A600E0C72F /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5C247C1F7370A600E0C72F /* Serializable.swift */; };
+		DB5C247D1F7370A600E0C72F /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5C247C1F7370A600E0C72F /* Codable.swift */; };
 		DB98EB101F75653F00AAE8DB /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB98EB0F1F75653F00AAE8DB /* MapViewDelegate.swift */; };
 		DB98EB141F756EED00AAE8DB /* MapViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB98EB131F756EED00AAE8DB /* MapViewExtension.swift */; };
 		DB9C862B1F49300E00ADE4B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C862A1F49300E00ADE4B0 /* AppDelegate.swift */; };
@@ -46,7 +46,7 @@
 		DB0EA0581F4E08F20063ED92 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		DB1AF1231F4A46D200FDB67D /* MapSavedRouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSavedRouteViewController.swift; sourceTree = "<group>"; };
-		DB5C247C1F7370A600E0C72F /* Serializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
+		DB5C247C1F7370A600E0C72F /* Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
 		DB98EB0F1F75653F00AAE8DB /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		DB98EB131F756EED00AAE8DB /* MapViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewExtension.swift; sourceTree = "<group>"; };
 		DB9C86271F49300E00ADE4B0 /* SailingRoute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SailingRoute.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				DB98EB0F1F75653F00AAE8DB /* MapViewDelegate.swift */,
-				DB5C247C1F7370A600E0C72F /* Serializable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -180,6 +179,7 @@
 		DBB57C2E1F71417500B7D537 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DB5C247C1F7370A600E0C72F /* Codable.swift */,
 				DB98EB131F756EED00AAE8DB /* MapViewExtension.swift */,
 				DBB57C2C1F7140F800B7D537 /* AngleExtensions.swift */,
 				DB0EA05A1F4E4FF30063ED92 /* UserDefaultsExtension.swift */,
@@ -355,7 +355,7 @@
 				DB9C86401F49D82200ADE4B0 /* SavedRoutesTableViewController.swift in Sources */,
 				DB0EA05B1F4E4FF30063ED92 /* UserDefaultsExtension.swift in Sources */,
 				DB9C86421F49EC7400ADE4B0 /* Route.swift in Sources */,
-				DB5C247D1F7370A600E0C72F /* Serializable.swift in Sources */,
+				DB5C247D1F7370A600E0C72F /* Codable.swift in Sources */,
 				DBBC1C011F4D260C00A881A8 /* Buoy.swift in Sources */,
 				DB1AF1241F4A46D200FDB67D /* MapSavedRouteViewController.swift in Sources */,
 				DB0EA04E1F4D3F950063ED92 /* CompassView.swift in Sources */,

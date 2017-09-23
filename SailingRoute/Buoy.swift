@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 
-struct Buoy: Serializable {
+struct Buoy: Codable {
 
     var identifier: String
     var usedInRace: Bool = false

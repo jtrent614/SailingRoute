@@ -18,14 +18,13 @@ extension UserDefaults {
     
     func getRoutes() -> [TraveledRoute] {
         guard let encodedData = data(forKey: Keys.savedRoutes.rawValue),
-                let routeList = encodedData.deserialize(type: [TraveledRoute].self) else { return [TraveledRoute]() }
+            let routeList = try? [TraveledRoute].decode(from: encodedData) else { return [TraveledRoute]() }
         return routeList
     }
     
     func updateSavedRoutes(_ routes: [TraveledRoute]) {
         do {
-            let encoder = JSONEncoder()
-            let encodedData = try encoder.encode(routes)
+            let encodedData = try routes.encode()
             set(encodedData, forKey: Keys.savedRoutes.rawValue)
         } catch { print(error) }
     }
@@ -34,8 +33,7 @@ extension UserDefaults {
         var routes = getRoutes()
         routes.insert(route, at: 0)
         do {
-            let encoder = JSONEncoder()
-            let encodedData = try encoder.encode(routes)
+            let encodedData = try routes.encode()
             set(encodedData, forKey: Keys.savedRoutes.rawValue)
         } catch { print(error) }
     }
@@ -43,17 +41,15 @@ extension UserDefaults {
     
     func saveBuoyList(_ list: BuoyList) {
         do {
-            let encoder = JSONEncoder()
-            let encodedData = try encoder.encode(list)
+            let encodedData = try list.encode()
             set(encodedData, forKey: Keys.buoyList.rawValue)
         } catch { print(error) }
     }
     
     func getBuoyList() -> BuoyList {
-        guard let archivedBuoyList = data(forKey: Keys.buoyList.rawValue) else { return BuoyList() }
-        
-        let decoder = JSONDecoder()
-        return try! decoder.decode(BuoyList.self, from: archivedBuoyList)
+        guard let encodedData = data(forKey: Keys.buoyList.rawValue),
+            let buoyList = try? BuoyList.decode(from: encodedData) else { return BuoyList() }
+        return buoyList
     }
     
 }

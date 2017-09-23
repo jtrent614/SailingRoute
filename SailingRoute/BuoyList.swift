@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class BuoyList: NSObject, Serializable
+class BuoyList: NSObject, Codable
 {
     var identifier: String = "main"
     
