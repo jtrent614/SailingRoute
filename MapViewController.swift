@@ -57,20 +57,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     {
         if !trackingInProgress {
             resetRoute()
-//            rightHudView.isHidden = Settings.shared.raceMode ? false : true
-            compassHudView.isHidden = false
-            
-            locationManager.startUpdatingLocation()
-            locationManager.startUpdatingHeading()
             
             mapIsFollowingUser = true
             trackingInProgress = true
         } else {
 //            rightHudView.isHidden = true
 //            compassHudView.isHidden = true
-            
-            locationManager.stopUpdatingLocation()
-            locationManager.stopUpdatingHeading()
             
             trackingInProgress = false
             saveRoute()
@@ -103,7 +95,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         setupLocationManager()
         mapView.delegate = delegate
         updateMap()
-        toggleRaceHuds(state: Settings.shared.raceMode)
+//        toggleRaceHud(state: Settings.shared.raceMode)
     }
     
     
@@ -135,8 +127,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         rightHudView.addGestureRecognizer(longPressGesture)
     }
     
-    private func toggleRaceHuds(state: Bool) {
-        compassHudView.isHidden = !state
+    private func toggleRaceHud(state: Bool) {
         rightHudView.isHidden = !state
     }
 
@@ -208,24 +199,22 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         guard Settings.shared.raceMode, let location = latestLocation,
             let mark = buoyList.used.first  else { return }
         
-        let distance = location.distance(from: mark.location)
+        let distance = mark.location.distance(from: location) * UnitConversions.meterToNauticalMile
         distanceToMarkLabel.text = distance.distanceToString
     }
     
     
     private func updateSpeedDisplay() {
         guard let speed = locationManager.location?.speed else { return }
-        
         speedLabel.text = speed > 0 ? String((speed * UnitConversions.metersPerSecondToKnots * 10).rounded() / 10) : "0.0"
     }
     
-    private func setMapRegion(location: CLLocation) {
-        let viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-                                                            Settings.shared.mapViewDistance,
-                                                            Settings.shared.mapViewDistance)
-        mapView.setRegion(viewRegion, animated: true)
-    }
     
+    private func setMapRegion(location: CLLocation) {
+        let span = Settings.shared.mapViewDistance
+        let region = MKCoordinateRegionMakeWithDistance(location.coordinate, span, span)
+        mapView.setRegion(region, animated: true)
+    }
     
     
     private func lookupLocationName(location: CLLocation)
@@ -259,6 +248,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil else { return }
+        
+        leftHudView.isHidden = false
+        compassHudView.isHidden = false
+        rightHudView.isHidden = !Settings.shared.raceMode
+
         
         updateDegreeLabels(coordinate:  coordinate, heading: newHeading)
         
@@ -332,13 +326,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         locationManager.activityType = .otherNavigation
         locationManager.pausesLocationUpdatesAutomatically = false
         locationManager.distanceFilter = 10.0
-        
         locationManager.headingFilter = kCLHeadingFilterNone
         
         if CLLocationManager.authorizationStatus() != .authorizedAlways {
             locationManager.requestAlwaysAuthorization()
         }
+        
         locationManager.requestLocation()
+        locationManager.startUpdatingHeading()
+        locationManager.startUpdatingLocation()
     }
     
     

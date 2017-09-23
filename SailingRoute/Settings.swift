@@ -12,7 +12,7 @@ class Settings: NSObject
 {
     static let shared = Settings()
     
-    var raceMode: Bool = true
+    var raceMode: Bool = false
     var showAllBuoys: Bool = false
     var mapViewDistance: Double = 3000
     
