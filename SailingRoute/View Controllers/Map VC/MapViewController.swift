@@ -168,12 +168,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         setRaceRoute()
         drawTraveledRoute()
         mapView.drawBuoys(buoyList: buoyList)
-        updateNavBarDistance()
-    }
-    
-    private func updateNavBarDistance()
-    {
-        navigationItem.title = "Distance: \(currentRoute.distance.distanceToString) nm"
     }
     
     private func drawRaceRoute()
@@ -238,27 +232,36 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         }
     }
     
-    
+    private func updateNavBarTitle(relativeBearing: CLLocationDirection)
+    {
+        //        l= relativeBearing >
+        let title = Settings.shared.raceMode ? relativeBearing.degreesToString : ""
+        navigationItem.title = title
+        
+    }
+
     // MARK: - Location Manager
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil else { return }
         
+        print(newHeading.trueHeading.degreesToString)
+        
         leftHudView.isHidden = false
         compassHudView.isHidden = false
         rightHudView.isHidden = !Settings.shared.raceMode
 
-        
         updateDegreeLabels(coordinate:  coordinate, heading: newHeading)
         
         UIView.animate(withDuration: 0.5) {
             let angle = computeRotation(with: newHeading.trueHeading)
             self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
+            self.updateNavBarTitle(relativeBearing: angle.toDegrees)
         }
         
         func computeRotation(with newAngle: CLLocationDirection) -> CLLocationDirection
         {
-            let angle = Settings.shared.raceMode ?  self.latestBearing : 0
+            let angle = Settings.shared.raceMode ?  0 : self.latestBearing
             return angle - newAngle.toRadians
         }
     }
