@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 
+// Must remain a class instead of struct since we're passing references around throughout the app
 class BuoyList: NSObject, Codable
 {
     var identifier: String = "main"
@@ -23,7 +24,7 @@ class BuoyList: NSObject, Codable
     override init() {
         super.init()
         for (name, location) in defaultBuoyDict {
-            unused.append(Buoy(identifier: name, coordinate: location.coordinate, usedInRace: false, buoyList: self))
+            unused.append(Buoy(identifier: name, coordinate: location.coordinate, buoyList: self))
         }
         unused = buoys
     }

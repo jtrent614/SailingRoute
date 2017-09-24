@@ -58,9 +58,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         if !trackingInProgress {
             resetRoute()
             
+            locationManager.startUpdatingLocation()
+            
             mapIsFollowingUser = true
             trackingInProgress = true
         } else {
+            locationManager.stopUpdatingLocation()
+            
             trackingInProgress = false
             saveRoute()
         }
@@ -88,9 +92,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupLocationManager()
         mapView.delegate = delegate
+        locationManager.startUpdatingHeading()
         updateMap()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationManager.stopUpdatingHeading()
     }
     
     
@@ -105,6 +114,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         let tabBarController = self.tabBarController as! SailingRouteTabBarController
         buoyList = tabBarController.buoyList
 
+        setupLocationManager()
         setupHuds()
     }
 
@@ -265,8 +275,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     private func updateNavBarTitle(relativeBearing: CLLocationDirection)
     {
         guard Settings.shared.raceMode else { navigationItem.title = ""; return }
-        let direction = relativeBearing >= 0 ? "Starboard" : "Port"
-        navigationItem.title = "Steer \(direction) \(abs(relativeBearing).degreesToString)"
+        
+        if relativeBearing > 2 || relativeBearing < -2 {
+            navigationItem.title = "Steer \(relativeBearing > 2 ? "Starboard" : "Port") \(abs(relativeBearing).degreesToString)"
+        } else {
+            navigationItem.title = "On Course"
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
@@ -292,6 +306,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let userLocation = locations.last else { return }
+        
+        distanceTraveledLabel.text = currentRoute.distance.distanceToString
         
         latestLocation = userLocation
         
@@ -327,7 +343,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         locationManager.activityType = .otherNavigation
         locationManager.pausesLocationUpdatesAutomatically = false
         locationManager.distanceFilter = 10.0
-        locationManager.headingFilter = kCLHeadingFilterNone
+        locationManager.headingFilter = 1.3
         
         if CLLocationManager.authorizationStatus() != .authorizedAlways {
             locationManager.requestAlwaysAuthorization()
@@ -335,7 +351,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         
         locationManager.requestLocation()
         locationManager.startUpdatingHeading()
-        locationManager.startUpdatingLocation()
     }
     
     

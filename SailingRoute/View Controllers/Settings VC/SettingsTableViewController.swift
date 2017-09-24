@@ -20,6 +20,7 @@ class SettingsTableViewController: UITableViewController {
     
     @objc func raceModeToggle() {
         Settings.shared.raceMode = !Settings.shared.raceMode
+        UserDefaults.standard.set(Settings.shared.raceMode, forKey: "raceMode")
     }
     
     @objc func showAllBuoysToggle() {
@@ -57,8 +58,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        var buoy = getBuoyAt(indexPath: fromIndexPath)
-        buoy.usedInRace = to.section == 1 ? true : false
+        let buoy = getBuoyAt(indexPath: fromIndexPath)
         
         if fromIndexPath.section == 1 && to.section == 2 {
             buoyList.used.remove(at: fromIndexPath.row)
