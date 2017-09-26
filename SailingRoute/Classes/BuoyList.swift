@@ -44,6 +44,35 @@ class BuoyList: NSObject, Codable
         unused.append(buoy)
     }
     
+    func deleteUnusedBuoy(indexPath: IndexPath) {
+        guard indexPath.section == 2 else { return }
+        self.unused.remove(at: indexPath.row)
+    }
+    
+    func getBuoyAt(indexPath: IndexPath) -> Buoy {
+        return indexPath.section == 1 ? self.used[indexPath.row] : self.unused[indexPath.row]
+    }
+    
+    func repositionBuoy(from: IndexPath, to: IndexPath) {
+        let buoy = self.getBuoyAt(indexPath: from)
+        
+        switch (from.section, to.section) {
+        case (1, 2):
+            self.used.remove(at: from.row)
+            self.unused.insert(buoy, at: to.row)
+        case (2, 1):
+            self.unused.remove(at: from.row)
+            self.used.insert(buoy, at: to.row)
+        case (2, 2):
+            self.unused.remove(at: from.row)
+            self.unused.insert(buoy, at: to.row)
+        case (1, 1):
+            self.used.remove(at: from.row)
+            self.used.insert(buoy, at: to.row)
+        default: return
+        }
+    }
+    
     private enum CodingKeys: String, CodingKey {
         case identifier
         case unused
