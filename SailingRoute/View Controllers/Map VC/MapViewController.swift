@@ -41,10 +41,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     var currentRaceRouteOverlay: MKGeodesicPolyline?
     
     var nextMarkLocation: CLLocation { return buoyList.used.first?.location ?? CLLocation(latitude: 90, longitude: 0) }
-    
-    var latestHeading: CLLocationDirection?
-    var latestLocation: CLLocation?
-    var latestBearing: CLLocationDirection { return latestLocation?.bearingToLocationRadian(nextMarkLocation).toDouble ?? 0 }
+    var latestBearing: CLLocationDirection { return locationManager.location?.bearingToLocationRadian(nextMarkLocation).toDouble ?? 0 }
     
     
     @objc func toggleFollow()
@@ -158,8 +155,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         let raceOrder = buoyList.used
         if raceOrder.count > 0 {
             var routeLocations = raceOrder.map { $0.location }
-            if latestLocation != nil {
-                routeLocations.insert(latestLocation!, at: 0)
+            if locationManager.location != nil {
+                routeLocations.insert(locationManager.location!, at: 0)
             }
             let route = Route(locations: routeLocations)
             nextMarkLabel.text = raceOrder.first!.identifier.uppercased()
@@ -197,7 +194,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     }
     
     private func updateDistanceToNextMark() {
-        guard Settings.shared.raceMode, let location = latestLocation,
+        guard Settings.shared.raceMode, let location = locationManager.location,
             let mark = buoyList.used.first  else { return }
         
         let distance = mark.location.distance(from: location) * UnitConversions.meterToNauticalMile
@@ -248,7 +245,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     // MARK: - Location Manager
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil else { return }
+        guard let coordinate = buoyList.used.first?.coordinate, locationManager.location != nil else { return }
     
         leftHudView.isHidden = false
         compassHudView.isHidden = false
@@ -309,8 +306,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         
         distanceTraveledLabel.text = currentRoute.distance.distanceToString
         
-        latestLocation = userLocation
-        
         updateSpeedDisplay()
         
         if mapIsFollowingUser {
@@ -361,7 +356,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     // MARK: - Compass
     
     private func updateDegreeLabels(coordinate: CLLocationCoordinate2D, heading: CLHeading) {
-        bearingLabel.text = latestLocation!.coordinate.direction(to: coordinate).to360Scale.degreesToString
+        bearingLabel.text = locationManager.location?.coordinate.direction(to: coordinate).to360Scale.degreesToString
         headingLabel.text = heading.trueHeading.degreesToString
     }
 }
