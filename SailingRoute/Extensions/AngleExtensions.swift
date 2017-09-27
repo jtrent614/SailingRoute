@@ -47,11 +47,6 @@ extension CLLocationCoordinate2D {
     {
         return self.calculateBearing(to: coordinate).toDegrees
     }
-    
-    static var trueNorth: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: 90, longitude: 0)
-    }
-    
 }
 
 extension CGFloat {
@@ -94,13 +89,10 @@ extension Double {
         return (self + 360).truncatingRemainder(dividingBy: 360)
     }
     
-    var undo360Scale: CLLocationDirection
+
+    func degreeDifference(between direction: CLLocationDirection) -> CLLocationDirection
     {
-        if self > 180 {
-            return self - 360
-        } else {
-            return self
-        }
+        return ((((self - direction).truncatingRemainder(dividingBy: 360)) + 540).truncatingRemainder(dividingBy: 360)) - 180
     }
     
     var degreesToString: String

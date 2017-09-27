@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct UnitConversions {
+enum UnitConversions {
     static let meterToNauticalMile: CLLocationDistance = 0.000539957
     static let metersPerSecondToKnots: Double = 1.943844
 }

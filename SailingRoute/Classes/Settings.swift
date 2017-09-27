@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Settings: NSObject
+final class Settings: NSObject
 {
     static let shared = Settings()
     
@@ -16,4 +16,7 @@ class Settings: NSObject
     var showAllBuoys: Bool = false
     var mapViewDistance: Double = 3000
     
+    private override init() {
+        super.init()
+    }
 }

@@ -28,7 +28,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     @IBOutlet weak var distanceToMarkLabel: UILabel!
     @IBOutlet weak var nextMarkLabel: UILabel!
     
-    private let locationManager = CLLocationManager()
+    private var locationManager = CLLocationManager()
     var delegate = MapDelegate()
     
     var buoyList: BuoyList = BuoyList()
@@ -230,7 +230,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         guard locations.count != 0 else { return }
         
         currentRoute.endDate = Date()
-        if currentRoute.locations.count == 0 {
+        if currentRoute.locations.isEmpty {
             lookupLocationName(location: locations.first!)
         }
         
@@ -257,14 +257,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             let angle = self.computeRotation(between: newHeading.trueHeading, and: self.latestBearing)
             self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
             
-            let navBarDegrees = self.latestBearing.toDegrees - newHeading.trueHeading.undo360Scale
+            let navBarDegrees = self.latestBearing.toDegrees.degreeDifference(between: newHeading.trueHeading)
             self.updateNavBarTitle(relativeBearing: navBarDegrees)
         }
     }
 
     func computeRotation(between heading: CLLocationDirection, and bearing: CLLocationDirection) -> CLLocationDirection
     {
-        let bearing = Settings.shared.raceMode ?  self.latestBearing : 0
+        let bearing = Settings.shared.raceMode ? self.latestBearing : 0
         return bearing - heading.toRadians
     }
     
@@ -273,6 +273,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     {
         guard Settings.shared.raceMode else { navigationItem.title = ""; return }
         
+        print(relativeBearing)
         if relativeBearing > 2 || relativeBearing < -2 {
             navigationItem.title = "Steer \(relativeBearing > 2 ? "Starboard" : "Port") \(abs(relativeBearing).degreesToString)"
         } else {
@@ -286,18 +287,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         if let region = region as? CLCircularRegion {
             if region.identifier == firstBuoy.identifier {
                 buoyList.used.removeFirst()
-                if buoyList.used.count == 0 {
+                if buoyList.used.isEmpty {
                     rightHudView.isHidden = true
                 } else {
                     nextMarkLabel.text = buoyList.used.first!.identifier
                 }
             }
         }
-        
-        // Point A:  latitude: 27.90366667, longitude: -82.45466667
-        // Point B:  latitude: 27.89766667, longitude: -82.44383333
-        // Point C:  latitude: 27.8805,  longitude: -82.44466667,
-        // Point E:  latitude: 27.88816667, longitude: -82.45283333
     }
     
     
@@ -332,13 +328,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     }
     
     private func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.activityType = .otherNavigation
-        locationManager.pausesLocationUpdatesAutomatically = false
-        locationManager.distanceFilter = 10.0
-        locationManager.headingFilter = 1.3
+        locationManager = { manager in
+            manager.delegate = self
+            manager.desiredAccuracy = kCLLocationAccuracyBest
+            manager.allowsBackgroundLocationUpdates = true
+            manager.activityType = .otherNavigation
+            manager.pausesLocationUpdatesAutomatically = false
+            manager.distanceFilter = 10.0
+            manager.headingFilter = 1.3
+            return manager
+        }(CLLocationManager())
         
         if CLLocationManager.authorizationStatus() != .authorizedAlways {
             locationManager.requestAlwaysAuthorization()
