@@ -177,6 +177,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         mapView.drawBuoys(buoyList: buoyList)
     }
     
+
+    
     private func drawRaceRoute()
     {
         if currentRaceRouteOverlay != nil {
@@ -239,32 +241,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
         currentRouteOverlay = currentRoute.polyline
         updateMap()
     }
-    
-    private func updateNavBarTitle(relativeBearing: CLLocationDirection)
-    {
-        //        l= relativeBearing >
-        let title = Settings.shared.raceMode ? relativeBearing.degreesToString : ""
-        navigationItem.title = title
-        
-    }
 
     // MARK: - Location Manager
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        guard let coordinate = buoyList.used.first?.coordinate, latestLocation != nil else { return }
-        
-        print(newHeading.trueHeading.degreesToString)
-        
+        guard let coordinate = buoyList.used.first?.coordinate, locationManager.location != nil else { return }
+    
         leftHudView.isHidden = false
         compassHudView.isHidden = false
         rightHudView.isHidden = !Settings.shared.raceMode
-
+        
         updateDegreeLabels(coordinate:  coordinate, heading: newHeading)
         
         UIView.animate(withDuration: 0.5) {
             let angle = self.computeRotation(between: newHeading.trueHeading, and: self.latestBearing)
             self.arrowImage.transform = CGAffineTransform(rotationAngle: CGFloat(angle))
-            self.updateNavBarTitle(relativeBearing: angle.toDegrees)
+            
+            let navBarDegrees = self.latestBearing.toDegrees.degreeDifference(between: newHeading.trueHeading)
+            self.updateNavBarTitle(relativeBearing: navBarDegrees)
         }
     }
 
@@ -279,10 +273,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     {
         guard Settings.shared.raceMode else { navigationItem.title = ""; return }
         
-        func computeRotation(with newAngle: CLLocationDirection) -> CLLocationDirection
-        {
-            let angle = Settings.shared.raceMode ?  0 : self.latestBearing
-            return angle - newAngle.toRadians
+        if relativeBearing > 2 || relativeBearing < -2 {
+            navigationItem.title = "Steer \(relativeBearing > 2 ? "Starboard" : "Port") \(abs(relativeBearing).degreesToString)"
+        } else {
+            navigationItem.title = "On Course"
         }
     }
 
