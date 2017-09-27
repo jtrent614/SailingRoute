@@ -20,6 +20,7 @@ class SettingsTableViewController: UITableViewController {
     
     @objc func raceModeToggle() {
         Settings.shared.raceMode = !Settings.shared.raceMode
+        UserDefaults.standard.set(Settings.shared.raceMode, forKey: "raceMode")
     }
     
     @objc func showAllBuoysToggle() {
@@ -52,27 +53,8 @@ class SettingsTableViewController: UITableViewController {
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    func getBuoyAt(indexPath: IndexPath) -> Buoy {
-        return indexPath.section == 1 ? buoyList.used[indexPath.row] : buoyList.unused[indexPath.row]
-    }
-    
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        var buoy = getBuoyAt(indexPath: fromIndexPath)
-        buoy.usedInRace = to.section == 1 ? true : false
-        
-        if fromIndexPath.section == 1 && to.section == 2 {
-            buoyList.used.remove(at: fromIndexPath.row)
-            buoyList.unused.insert(buoy, at: to.row)
-        } else if fromIndexPath.section == 2 && to.section == 1 {
-            buoyList.unused.remove(at: fromIndexPath.row)
-            buoyList.used.insert(buoy, at: to.row)
-        } else if fromIndexPath.section == 2 && to.section == 2 {
-            buoyList.unused.remove(at: fromIndexPath.row)
-            buoyList.unused.insert(buoy, at: to.row)
-        } else if fromIndexPath.section == 1 && to.section == 1 {
-            buoyList.used.remove(at: fromIndexPath.row)
-            buoyList.used.insert(buoy, at: to.row)
-        }
+        buoyList.repositionBuoy(from: fromIndexPath, to: to)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,7 +71,7 @@ class SettingsTableViewController: UITableViewController {
             }
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "buoyCell", for: indexPath)
-            cell.textLabel?.text = getBuoyAt(indexPath: indexPath).identifier
+            cell.textLabel?.text = buoyList.getBuoyAt(indexPath: indexPath).identifier
         }
         return cell
     }
@@ -115,7 +97,7 @@ class SettingsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
-            buoyList.unused.remove(at: indexPath.row)
+            buoyList.deleteUnusedBuoy(indexPath: indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }

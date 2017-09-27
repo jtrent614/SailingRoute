@@ -16,6 +16,7 @@ class SailingRouteTabBarController: UITabBarController {
         super.viewDidLoad()
         
         buoyList = UserDefaults.standard.getBuoyList()
+        Settings.shared.raceMode = UserDefaults.standard.bool(forKey: "raceMode")
     }
 
 }

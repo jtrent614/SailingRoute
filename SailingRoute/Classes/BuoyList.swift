@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 
+// Must remain a class instead of struct since we're passing references around throughout the app
 class BuoyList: NSObject, Codable
 {
     var identifier: String = "main"
@@ -23,7 +24,7 @@ class BuoyList: NSObject, Codable
     override init() {
         super.init()
         for (name, location) in defaultBuoyDict {
-            unused.append(Buoy(identifier: name, coordinate: location.coordinate, usedInRace: false, buoyList: self))
+            unused.append(Buoy(identifier: name, coordinate: location.coordinate, buoyList: self))
         }
         unused = buoys
     }
@@ -41,6 +42,35 @@ class BuoyList: NSObject, Codable
     
     func addBuoy(_ buoy: Buoy) {
         unused.append(buoy)
+    }
+    
+    func deleteUnusedBuoy(indexPath: IndexPath) {
+        guard indexPath.section == 2 else { return }
+        self.unused.remove(at: indexPath.row)
+    }
+    
+    func getBuoyAt(indexPath: IndexPath) -> Buoy {
+        return indexPath.section == 1 ? self.used[indexPath.row] : self.unused[indexPath.row]
+    }
+    
+    func repositionBuoy(from: IndexPath, to: IndexPath) {
+        let buoy = self.getBuoyAt(indexPath: from)
+        
+        switch (from.section, to.section) {
+        case (1, 2):
+            self.used.remove(at: from.row)
+            self.unused.insert(buoy, at: to.row)
+        case (2, 1):
+            self.unused.remove(at: from.row)
+            self.used.insert(buoy, at: to.row)
+        case (2, 2):
+            self.unused.remove(at: from.row)
+            self.unused.insert(buoy, at: to.row)
+        case (1, 1):
+            self.used.remove(at: from.row)
+            self.used.insert(buoy, at: to.row)
+        default: return
+        }
     }
     
     private enum CodingKeys: String, CodingKey {

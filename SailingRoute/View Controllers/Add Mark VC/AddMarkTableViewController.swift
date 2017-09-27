@@ -28,7 +28,7 @@ class AddMarkTableViewController: UITableViewController {
             let buoyList = tabBarController.buoyList
             
             let coordinate = CLLocationCoordinate2D(latitude: latTextField.text!.double!, longitude: latTextField.text!.double!)
-            let newBuoy = Buoy(identifier: nameTextField.text!, coordinate: coordinate, usedInRace: false, buoyList: buoyList)
+            let newBuoy = Buoy(identifier: nameTextField.text!, coordinate: coordinate, buoyList: buoyList)
             buoyList.addBuoy(newBuoy)
             
             self.navigationController?.popViewController(animated: true)

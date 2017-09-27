@@ -13,7 +13,6 @@ import MapKit
 struct Buoy: Codable {
 
     var identifier: String
-    var usedInRace: Bool = false
     var buoyList: BuoyList?
     
     private var _latitude: Double
@@ -36,11 +35,10 @@ struct Buoy: Codable {
         return Annotation(buoy: self)
     }
   
-    init(identifier: String, coordinate: CLLocationCoordinate2D, usedInRace: Bool, buoyList: BuoyList) {
+    init(identifier: String, coordinate: CLLocationCoordinate2D, buoyList: BuoyList) {
         self.identifier = identifier
         self._latitude = coordinate.latitude
         self._longitude = coordinate.longitude
-        self.usedInRace = usedInRace
         self.buoyList = buoyList
     }
     
@@ -48,7 +46,6 @@ struct Buoy: Codable {
         case identifier
         case _latitude
         case _longitude
-        case usedInRace
     }
     
     func encode(to encoder: Encoder) throws {
@@ -56,7 +53,6 @@ struct Buoy: Codable {
         try container.encode(identifier, forKey: .identifier)
         try container.encode(_latitude, forKey: ._latitude)
         try container.encode(_longitude, forKey: ._longitude)
-        try container.encode(usedInRace, forKey: .usedInRace)
     }
     
     init(from decoder: Decoder) throws {
@@ -64,7 +60,6 @@ struct Buoy: Codable {
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self._latitude = try container.decode(Double.self, forKey: ._latitude)
         self._longitude = try container.decode(Double.self, forKey: ._longitude)
-        self.usedInRace = try container.decode(Bool.self, forKey: .usedInRace)
     }
 }
 
