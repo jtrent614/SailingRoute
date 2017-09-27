@@ -29,7 +29,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     @IBOutlet weak var nextMarkLabel: UILabel!
     
     private var locationManager = CLLocationManager()
-    var delegate = MapDelegate()
+    private var mapDelegate = MapDelegate()
     
     var buoyList: BuoyList = BuoyList()
     
@@ -40,7 +40,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     var currentRouteOverlay: MKPolyline?
     var currentRaceRouteOverlay: MKGeodesicPolyline?
     
-    var nextMarkLocation: CLLocation { return buoyList.used.first?.location ?? CLLocation(latitude: 90, longitude: 0) }
+    var nextMarkLocation: CLLocation { return buoyList.used.first?.location ?? CLLocation.trueNorth }
     var latestBearing: CLLocationDirection { return locationManager.location?.bearingToLocationRadian(nextMarkLocation).toDouble ?? 0 }
     
     
@@ -89,7 +89,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        mapView.delegate = delegate
+        mapView.delegate = mapDelegate
         locationManager.startUpdatingHeading()
         updateMap()
     }
@@ -234,11 +234,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
             lookupLocationName(location: locations.first!)
         }
         
-        for location in locations {
+        locations.forEach { location in
             currentRoute.locations.append(location)
-            currentRouteOverlay = currentRoute.polyline
-            updateMap()
         }
+        
+        currentRouteOverlay = currentRoute.polyline
+        updateMap()
     }
     
     
@@ -273,7 +274,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIGestureR
     {
         guard Settings.shared.raceMode else { navigationItem.title = ""; return }
         
-        print(relativeBearing)
         if relativeBearing > 2 || relativeBearing < -2 {
             navigationItem.title = "Steer \(relativeBearing > 2 ? "Starboard" : "Port") \(abs(relativeBearing).degreesToString)"
         } else {

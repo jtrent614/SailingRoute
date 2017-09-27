@@ -11,8 +11,7 @@ import UIKit
 
 public extension CLLocation {
     
-    func bearingToLocationRadian(_ destinationLocation: CLLocation) -> CGFloat
-    {
+    func bearingToLocationRadian(_ destinationLocation: CLLocation) -> CGFloat {
         let lat1 = self.coordinate.latitude.toRadians
         let lon1 = self.coordinate.longitude.toRadians
         
@@ -31,51 +30,48 @@ public extension CLLocation {
     func bearingToLocationDegrees(destinationLocation: CLLocation) -> CGFloat {
         return bearingToLocationRadian(destinationLocation).toDegrees
     }
+    
+    static var trueNorth: CLLocation {
+        return CLLocation(latitude: 90, longitude: 0)
+    }
 }
 
 
 extension CLLocationCoordinate2D {
     
-    func calculateBearing(to coordinate: CLLocationCoordinate2D) -> Double
-    {
+    func calculateBearing(to coordinate: CLLocationCoordinate2D) -> Double {
         let a = sin(coordinate.longitude.toRadians - longitude.toRadians) * cos(coordinate.latitude.toRadians)
         let b = cos(latitude.toRadians) * sin(coordinate.latitude.toRadians) - sin(latitude.toRadians) * cos(coordinate.latitude.toRadians) * cos(coordinate.longitude.toRadians - longitude.toRadians)
         return atan2(a, b)
     }
     
-    func direction(to coordinate: CLLocationCoordinate2D) -> CLLocationDirection
-    {
+    func direction(to coordinate: CLLocationCoordinate2D) -> CLLocationDirection {
         return self.calculateBearing(to: coordinate).toDegrees
     }
 }
 
 extension CGFloat {
     
-    var toRadians: CGFloat
-    {
+    var toRadians: CGFloat{
         return self * .pi / 180
     }
     
-    var toDegrees: CGFloat
-    {
+    var toDegrees: CGFloat {
         return self * 180.0 / .pi
     }
     
-    var toDouble: Double
-    {
+    var toDouble: Double  {
         return Double(self)
     }
 }
 
 extension Double {
     
-    var toRadians: Double
-    {
+    var toRadians: Double {
         return Double(CGFloat(self).toRadians)
     }
     
-    var toDegrees: Double
-    {
+    var toDegrees: Double  {
         return Double(CGFloat(self).toDegrees)
     }
     
@@ -84,19 +80,16 @@ extension Double {
         return String(describing: (self * precision).rounded() / precision)
     }
     
-    var to360Scale: CLLocationDirection
-    {
+    var to360Scale: CLLocationDirection {
         return (self + 360).truncatingRemainder(dividingBy: 360)
     }
     
 
-    func degreeDifference(between direction: CLLocationDirection) -> CLLocationDirection
-    {
+    func degreeDifference(between direction: CLLocationDirection) -> CLLocationDirection {
         return ((((self - direction).truncatingRemainder(dividingBy: 360)) + 540).truncatingRemainder(dividingBy: 360)) - 180
     }
     
-    var degreesToString: String
-    {
+    var degreesToString: String {
         return String(Int(self)) + "°"
     }
 }
